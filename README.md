@@ -2,10 +2,6 @@
 
 ## Setup
 
-### Clone the repository
-
-
-
 ### Install dependencies
 
 From the `backend` folder, run `yarn install`.
