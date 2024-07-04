@@ -1,16 +1,16 @@
 {
-    "extends": [
+  "extends": [
+      "prettier",
       "eslint:recommended",
       "plugin:@typescript-eslint/recommended",
-      "prettier",
       "plugin:prettier/recommended"
-    ],
-    "plugins": ["prettier", "import", "simple-import-sort"],
-    "parserOptions": {
+  ],
+  "plugins": ["prettier", "import", "simple-import-sort"],
+  "parserOptions": {
       "project": "./tsconfig.json"
-    },
-    "ignorePatterns": ["dist"],
-    "rules": {
+  },
+  "ignorePatterns": ["dist"],
+  "rules": {
       "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
       "import/first": "error",
       "import/newline-after-import": "error",
@@ -18,5 +18,5 @@
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
       "@typescript-eslint/no-unused-vars": "error"
-    }
   }
+}
