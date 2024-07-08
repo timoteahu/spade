@@ -1,0 +1,16 @@
+2024-07-07 21:22:06.184 PDT [79567] LOG:  starting PostgreSQL 14.12 (Homebrew) on aarch64-apple-darwin21.6.0, compiled by Apple clang version 14.0.0 (clang-1400.0.29.202), 64-bit
+2024-07-07 21:22:06.191 PDT [79567] LOG:  listening on IPv6 address "::1", port 5432
+2024-07-07 21:22:06.191 PDT [79567] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-07-07 21:22:06.192 PDT [79567] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-07-07 21:22:06.195 PDT [79568] LOG:  database system was shut down at 2024-07-07 21:21:11 PDT
+2024-07-07 21:22:06.199 PDT [79567] LOG:  database system is ready to accept connections
+2024-07-07 21:23:08.345 PDT [79842] ERROR:  role "timothyhu" already exists
+2024-07-07 21:23:08.345 PDT [79842] STATEMENT:  CREATE USER timothyhu WITH ENCRYPTED PASSWORD 'password';
+2024-07-07 21:23:19.139 PDT [79842] ERROR:  role "timothyhu" already exists
+2024-07-07 21:23:19.139 PDT [79842] STATEMENT:  CREATE USER timothyhu WITH ENCRYPTED PASSWORD 'password';
+2024-07-07 21:25:23.023 PDT [80229] LOG:  could not receive data from client: Connection reset by peer
+2024-07-07 21:25:23.041 PDT [80231] ERROR:  relation "_prisma_migrations" does not exist at character 126
+2024-07-07 21:25:23.041 PDT [80231] STATEMENT:  SELECT "id", "checksum", "finished_at", "migration_name", "logs", "rolled_back_at", "started_at", "applied_steps_count" FROM "_prisma_migrations" ORDER BY "started_at" ASC
+2024-07-07 21:25:23.264 PDT [80233] FATAL:  terminating connection due to administrator command
+2024-07-07 21:25:23.459 PDT [80234] FATAL:  terminating connection due to administrator command
+2024-07-07 21:25:23.645 PDT [80235] FATAL:  terminating connection due to administrator command
