@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+
 import UserRouter from "./routers/userRouter";
 
 const app = express();
