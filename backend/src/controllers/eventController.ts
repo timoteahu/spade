@@ -41,7 +41,7 @@ export const createEvent = async (req: Request, res: Response) => {
   /* add to database */
   try {
     // create from prisma schema
-    const event = prisma.event.create({
+    const event = await prisma.event.create({
       data: {
         title: title,
         description: description,

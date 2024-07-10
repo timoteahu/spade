@@ -1,7 +1,7 @@
 const testCreate = async () => {
   const url = "http://localhost:3000/event/create";
 
-  fetch(url, {
+  await fetch(url, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -12,7 +12,12 @@ const testCreate = async () => {
     }),
     method: "POST",
   }).then((res) => {
+    console.log("Result: ");
     console.log(res);
+    console.log("\n\n");
+
+    console.log("Body: ");
+    res.json().then((json) => console.log(json));
   });
 };
 
