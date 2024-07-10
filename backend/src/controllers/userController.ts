@@ -1,7 +1,5 @@
 import { Request, Response } from "../utils/api";
-
 import prisma from "../utils/prisma";
-
 import { EmptyObject } from "../utils/types";
 
 type UpsertUserBody = {
