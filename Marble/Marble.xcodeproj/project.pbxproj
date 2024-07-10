@@ -14,6 +14,9 @@
 		30172ACC2C368E7A000CAD04 /* MarbleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30172ACB2C368E7A000CAD04 /* MarbleTests.swift */; };
 		30172AD62C368E7A000CAD04 /* MarbleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30172AD52C368E7A000CAD04 /* MarbleUITests.swift */; };
 		30172AD82C368E7A000CAD04 /* MarbleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30172AD72C368E7A000CAD04 /* MarbleUITestsLaunchTests.swift */; };
+		30A8A49F2C3F129F0079462E /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A49E2C3F129F0079462E /* UsersView.swift */; };
+		30A8A4A12C3F12BB0079462E /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4A02C3F12BB0079462E /* GroupsView.swift */; };
+		30A8A4A32C3F12DE0079462E /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4A22C3F12DE0079462E /* EventsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		30172AD12C368E7A000CAD04 /* MarbleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarbleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		30172AD52C368E7A000CAD04 /* MarbleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarbleUITests.swift; sourceTree = "<group>"; };
 		30172AD72C368E7A000CAD04 /* MarbleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarbleUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		30A8A49E2C3F129F0079462E /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
+		30A8A4A02C3F12BB0079462E /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
+		30A8A4A22C3F12DE0079462E /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +100,7 @@
 		30172AB92C368E77000CAD04 /* Marble */ = {
 			isa = PBXGroup;
 			children = (
+				30A8A49B2C3F12620079462E /* Navigation */,
 				30172ABA2C368E77000CAD04 /* MarbleApp.swift */,
 				30172ABC2C368E77000CAD04 /* ContentView.swift */,
 				30172ABE2C368E79000CAD04 /* Assets.xcassets */,
@@ -125,6 +132,16 @@
 				30172AD72C368E7A000CAD04 /* MarbleUITestsLaunchTests.swift */,
 			);
 			path = MarbleUITests;
+			sourceTree = "<group>";
+		};
+		30A8A49B2C3F12620079462E /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				30A8A49E2C3F129F0079462E /* UsersView.swift */,
+				30A8A4A02C3F12BB0079462E /* GroupsView.swift */,
+				30A8A4A22C3F12DE0079462E /* EventsView.swift */,
+			);
+			path = Navigation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,7 +275,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				30172ABD2C368E77000CAD04 /* ContentView.swift in Sources */,
+				30A8A4A32C3F12DE0079462E /* EventsView.swift in Sources */,
 				30172ABB2C368E77000CAD04 /* MarbleApp.swift in Sources */,
+				30A8A4A12C3F12BB0079462E /* GroupsView.swift in Sources */,
+				30A8A49F2C3F129F0079462E /* UsersView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
