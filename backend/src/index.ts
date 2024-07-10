@@ -1,6 +1,7 @@
 import cors from "cors";
 import express, { Request, Response } from "express";
 
+import EventRouter from "./routers/eventRouter";
 import UserRouter from "./routers/userRouter";
 
 /* setup express */
@@ -13,6 +14,7 @@ app.use(express.json());
 
 /* go to routes */
 app.use("/user", UserRouter);
+app.use("/event", EventRouter);
 
 /* frontend/other */
 app.get("/", (req: Request, res: Response) => {
