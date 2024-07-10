@@ -6,6 +6,7 @@ fetch(url, {
   },
   body: JSON.stringify({
     /* write post body here */
+    email: "testemail@gmail.com",
   }),
   method: "POST",
 }).then((res) => {
