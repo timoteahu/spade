@@ -1,6 +1,6 @@
 const url = "http://localhost:3000/user";
 
-fetch("http://localhost:3000", {
+fetch(url, {
   headers: {
     "Content-Type": "application/json",
   },
