@@ -21,6 +21,9 @@ export const upsertUser = async (
 ) => {
   console.log("CALL");
   const { email, username } = req.body;
+
+  console.log("email: ", email); // Add this line to log the email
+  console.log("username: ", username); // Add this line to log the username
   if (!email) {
     return res.status(400).send();
   }
@@ -38,6 +41,7 @@ export const upsertUser = async (
       },
     });
 
+    console.log("FINISHED");
     return res.send(user);
   } catch (e) {
     return res.status(400).send();

@@ -64,12 +64,14 @@ struct UsersView: View {
             return
         }
 
-        // Call the API endpoint to sign in (this is just a placeholder, replace with your actual API call)
+        // Call the API endpoint to sign in
         let url = URL(string: "\(EnvConfig.baseURL)/user")!
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         let body = ["email": email, "username": username]
+        print("Request Body: \(body)") // Add this line to print the request body
         request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
@@ -80,7 +82,7 @@ struct UsersView: View {
                 return
             }
 
-            guard let data = data else {
+            guard data != nil else {
                 DispatchQueue.main.async {
                     alertMessage = "No data received."
                     showAlert = true
@@ -94,5 +96,4 @@ struct UsersView: View {
                 showAlert = false
             }
         }.resume()
-    }
-}
+    }}
