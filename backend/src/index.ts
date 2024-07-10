@@ -6,6 +6,11 @@ import UserRouter from "./routers/userRouter";
 const app = express();
 const port = 3000;
 
+/* middleware */
+// add cors here
+
+app.use(express.json());
+
 /* go to routes */
 app.use("/user", UserRouter);
 
