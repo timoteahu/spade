@@ -8,7 +8,7 @@ const testCreate = async () => {
     body: JSON.stringify({
       /* write post body here */
       title: "Event Number 1 title",
-      groupId: 121341,
+      groupId: 2,
     }),
     method: "POST",
   }).then((res) => {

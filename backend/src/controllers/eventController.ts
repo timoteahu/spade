@@ -45,7 +45,7 @@ export const createEvent = async (req: Request, res: Response) => {
       data: {
         title: title,
         description: description,
-        groupId: groupId,
+        groupId: parseInt(groupId),
       },
     });
 
