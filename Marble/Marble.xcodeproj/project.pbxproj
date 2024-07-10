@@ -17,6 +17,8 @@
 		30A8A49F2C3F129F0079462E /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A49E2C3F129F0079462E /* UsersView.swift */; };
 		30A8A4A12C3F12BB0079462E /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4A02C3F12BB0079462E /* GroupsView.swift */; };
 		30A8A4A32C3F12DE0079462E /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4A22C3F12DE0079462E /* EventsView.swift */; };
+		30A8A4A72C3F2BBD0079462E /* EnvConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4A62C3F2BBD0079462E /* EnvConfig.swift */; };
+		30A8A4AE2C3F2D0E0079462E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4AD2C3F2D0E0079462E /* NetworkService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,9 @@
 		30A8A49E2C3F129F0079462E /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
 		30A8A4A02C3F12BB0079462E /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
 		30A8A4A22C3F12DE0079462E /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
+		30A8A4A62C3F2BBD0079462E /* EnvConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvConfig.swift; sourceTree = "<group>"; };
+		30A8A4AD2C3F2D0E0079462E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		30A8A4AF2C3F326B0079462E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,11 +105,14 @@
 		30172AB92C368E77000CAD04 /* Marble */ = {
 			isa = PBXGroup;
 			children = (
+				30A8A4AC2C3F2CFA0079462E /* Network */,
+				30A8A4AB2C3F2CC30079462E /* Config */,
 				30A8A49B2C3F12620079462E /* Navigation */,
 				30172ABA2C368E77000CAD04 /* MarbleApp.swift */,
 				30172ABC2C368E77000CAD04 /* ContentView.swift */,
 				30172ABE2C368E79000CAD04 /* Assets.xcassets */,
 				30172AC02C368E79000CAD04 /* Preview Content */,
+				30A8A4AF2C3F326B0079462E /* Info.plist */,
 			);
 			path = Marble;
 			sourceTree = "<group>";
@@ -142,6 +150,22 @@
 				30A8A4A22C3F12DE0079462E /* EventsView.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		30A8A4AB2C3F2CC30079462E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				30A8A4A62C3F2BBD0079462E /* EnvConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		30A8A4AC2C3F2CFA0079462E /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				30A8A4AD2C3F2D0E0079462E /* NetworkService.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,10 +299,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				30172ABD2C368E77000CAD04 /* ContentView.swift in Sources */,
+				30A8A4A72C3F2BBD0079462E /* EnvConfig.swift in Sources */,
 				30A8A4A32C3F12DE0079462E /* EventsView.swift in Sources */,
 				30172ABB2C368E77000CAD04 /* MarbleApp.swift in Sources */,
 				30A8A4A12C3F12BB0079462E /* GroupsView.swift in Sources */,
 				30A8A49F2C3F129F0079462E /* UsersView.swift in Sources */,
+				30A8A4AE2C3F2D0E0079462E /* NetworkService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +471,7 @@
 				DEVELOPMENT_TEAM = SJ4RHWQQY2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Marble/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -474,6 +501,7 @@
 				DEVELOPMENT_TEAM = SJ4RHWQQY2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Marble/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
