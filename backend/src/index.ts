@@ -1,7 +1,7 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
-import { expressjwt } from "express-jwt";
+// import { expressjwt } from "express-jwt";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 
