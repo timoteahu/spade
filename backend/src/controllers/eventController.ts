@@ -34,8 +34,7 @@ export const createEvent = async (
     const { title, description, groupId } = req.body;
 
     /* catch errors */
-    if (!title || !description)
-      throw createError(400, "required argument is missing");
+    if (!title) throw createError(400, "required argument is missing");
 
     // create from prisma schema
     const event = await prisma.event.create({
@@ -103,7 +102,7 @@ export const getEvent = async (
     });
 
     /* send to client */
-    res.status(200).send(event);
+    res.status(200).send(event ? event : {});
   } catch (err) {
     next(err);
   }
@@ -115,22 +114,22 @@ export const changeEventDesc = async (
   res: Response,
   next: NextFunction,
 ) => {
-  /* get groupId from params */
-  const { eventId } = req.params;
-  const { newDescription } = req.body;
-
-  /* catches errors */
-  if (!eventId || !newDescription)
-    throw createError(400, "eventId argument is missing");
-
   try {
+    /* get groupId from params */
+    const { eventId } = req.params;
+    const { description } = req.body;
+
+    /* catches errors */
+    if (!eventId || !description)
+      throw createError(400, "required argument is missing");
+
     /* updates event from event schema */
     const updatedEvent = await prisma.event.update({
       where: {
         id: parseInt(eventId),
       },
       data: {
-        description: newDescription,
+        description: description,
       },
     });
 
@@ -149,10 +148,11 @@ export const changeEventTitle = async (
   try {
     // get groupId from params
     const { eventId } = req.params;
-    const { newTitle } = req.body;
+    const { title } = req.body;
 
     /* catch errors */
-    if (!eventId) throw createError(400, "eventId argument is missing");
+    if (!eventId || !title)
+      throw createError(400, "required argument is missing");
 
     // grabs all events within a group
     const updatedEvent = await prisma.event.update({
@@ -160,7 +160,7 @@ export const changeEventTitle = async (
         id: parseInt(eventId),
       },
       data: {
-        title: newTitle,
+        title: title,
       },
     });
 
