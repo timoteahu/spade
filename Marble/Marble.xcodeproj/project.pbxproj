@@ -20,6 +20,7 @@
 		30A8A4A72C3F2BBD0079462E /* EnvConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4A62C3F2BBD0079462E /* EnvConfig.swift */; };
 		30A8A4AE2C3F2D0E0079462E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4AD2C3F2D0E0079462E /* NetworkService.swift */; };
 		30A8A4B42C3FAE0E0079462E /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4B32C3FAE0E0079462E /* SplashScreenView.swift */; };
+		30A8A4B62C407E530079462E /* KeyChainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4B52C407E530079462E /* KeyChainHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		30A8A4AD2C3F2D0E0079462E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		30A8A4AF2C3F326B0079462E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30A8A4B32C3FAE0E0079462E /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
+		30A8A4B52C407E530079462E /* KeyChainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				30A8A4AD2C3F2D0E0079462E /* NetworkService.swift */,
+				30A8A4B52C407E530079462E /* KeyChainHelper.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30A8A4B62C407E530079462E /* KeyChainHelper.swift in Sources */,
 				30172ABD2C368E77000CAD04 /* ContentView.swift in Sources */,
 				30A8A4A72C3F2BBD0079462E /* EnvConfig.swift in Sources */,
 				30A8A4A32C3F12DE0079462E /* EventsView.swift in Sources */,
