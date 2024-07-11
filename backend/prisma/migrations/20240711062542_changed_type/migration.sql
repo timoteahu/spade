@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Group" ALTER COLUMN "join_code" SET DATA TYPE VARCHAR;

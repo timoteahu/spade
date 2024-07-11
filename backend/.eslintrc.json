@@ -7,7 +7,7 @@
   ],
   "plugins": ["prettier", "import", "simple-import-sort"],
   "parserOptions": {
-    "project": "./tsconfig.json",
+    "project": "./backend/tsconfig.json",
     "sourceType": "module"
   },
   "ignorePatterns": ["dist"],
