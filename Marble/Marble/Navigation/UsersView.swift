@@ -17,9 +17,22 @@ struct UsersView: View {
     var body: some View {
         VStack {
             if isSignedIn {
-                Text("Signed In")
-                    .font(.largeTitle)
+                VStack {
+                    Text("Signed In")
+                        .font(.largeTitle)
+                        .padding()
+
+                    Button(action: {
+                        signOut()
+                    }) {
+                        Text("Sign Out")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.red)
+                            .cornerRadius(8)
+                    }
                     .padding()
+                }
             } else {
                 VStack {
                     Text("Sign In")
@@ -56,6 +69,7 @@ struct UsersView: View {
         }
     }
 
+
     func signIn() {
         // Validate inputs
         guard !email.isEmpty, !username.isEmpty else {
@@ -64,36 +78,26 @@ struct UsersView: View {
             return
         }
 
-        // Call the API endpoint to sign in
-        let url = URL(string: "\(EnvConfig.baseURL)/user")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let body = ["email": email, "username": username]
-        print("Request Body: \(body)") // Add this line to print the request body
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                DispatchQueue.main.async {
+        NetworkService.signIn(email: email, username: username) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    isSignedIn = true
+                    showAlert = false
+                case .failure(let error):
                     alertMessage = "Error: \(error.localizedDescription)"
                     showAlert = true
                 }
-                return
             }
-
-            guard data != nil else {
-                DispatchQueue.main.async {
-                    alertMessage = "No data received."
-                    showAlert = true
-                }
-                return
-            }
-
-            // Assume a successful response means the user is signed in
-            DispatchQueue.main.async {
-                isSignedIn = true
-                showAlert = false
-            }
-        }.resume()
-    }}
+        }
+    }
+    
+    func signOut() {
+        // Sign out logic
+        isSignedIn = false
+        email = ""
+        username = ""
+        showAlert = false
+        alertMessage = ""
+    }
+}
