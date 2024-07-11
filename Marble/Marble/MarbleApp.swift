@@ -8,10 +8,10 @@
 import SwiftUI
 
 @main
-struct MarbleApp: App {
+struct MyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashScreenView()
         }
     }
 }
