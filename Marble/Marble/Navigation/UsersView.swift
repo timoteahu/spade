@@ -21,6 +21,16 @@ struct UsersView: View {
                     Text("Signed In")
                         .font(.largeTitle)
                         .padding()
+                    
+                    
+                    Text("\(username)")
+                        .font(.subheadline)
+                        .padding()
+                    
+                    Text("\(email)")
+                        .font(.subheadline)
+                        .padding()
+
 
                     Button(action: {
                         signOut()
@@ -67,8 +77,16 @@ struct UsersView: View {
                 .padding()
             }
         }
+        .onAppear {
+            // Check if user info is stored in UserDefaults
+            if let storedEmail = UserDefaults.standard.string(forKey: "userEmail"),
+               let storedUsername = UserDefaults.standard.string(forKey: "userUsername") {
+                email = storedEmail
+                username = storedUsername
+                isSignedIn = true
+            }
+        }
     }
-
 
     func signIn() {
         // Validate inputs
@@ -91,7 +109,7 @@ struct UsersView: View {
             }
         }
     }
-    
+
     func signOut() {
         // Sign out logic
         isSignedIn = false
@@ -99,5 +117,9 @@ struct UsersView: View {
         username = ""
         showAlert = false
         alertMessage = ""
+
+        // Remove user info from UserDefaults
+        UserDefaults.standard.removeObject(forKey: "userEmail")
+        UserDefaults.standard.removeObject(forKey: "userUsername")
     }
 }
