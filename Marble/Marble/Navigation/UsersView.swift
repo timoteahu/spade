@@ -17,9 +17,32 @@ struct UsersView: View {
     var body: some View {
         VStack {
             if isSignedIn {
-                Text("Signed In")
-                    .font(.largeTitle)
+                VStack {
+                    Text("Signed In")
+                        .font(.largeTitle)
+                        .padding()
+                    
+                    
+                    Text("\(username)")
+                        .font(.subheadline)
+                        .padding()
+                    
+                    Text("\(email)")
+                        .font(.subheadline)
+                        .padding()
+
+
+                    Button(action: {
+                        signOut()
+                    }) {
+                        Text("Sign Out")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.red)
+                            .cornerRadius(8)
+                    }
                     .padding()
+                }
             } else {
                 VStack {
                     Text("Sign In")
@@ -54,6 +77,15 @@ struct UsersView: View {
                 .padding()
             }
         }
+        .onAppear {
+            // Check if user info is stored in UserDefaults
+            if let storedEmail = UserDefaults.standard.string(forKey: "userEmail"),
+               let storedUsername = UserDefaults.standard.string(forKey: "userUsername") {
+                email = storedEmail
+                username = storedUsername
+                isSignedIn = true
+            }
+        }
     }
 
     func signIn() {
@@ -64,36 +96,32 @@ struct UsersView: View {
             return
         }
 
-        // Call the API endpoint to sign in
-        let url = URL(string: "\(EnvConfig.baseURL)/user")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let body = ["email": email, "username": username]
-        print("Request Body: \(body)") // Add this line to print the request body
-        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                DispatchQueue.main.async {
+        NetworkService.signIn(email: email, username: username) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    UserDefaults.standard.set(email, forKey: "userEmail")
+                    UserDefaults.standard.set(username, forKey: "userUsername")
+                    isSignedIn = true
+                    showAlert = false
+                case .failure(let error):
                     alertMessage = "Error: \(error.localizedDescription)"
                     showAlert = true
                 }
-                return
             }
+        }
+    }
 
-            guard data != nil else {
-                DispatchQueue.main.async {
-                    alertMessage = "No data received."
-                    showAlert = true
-                }
-                return
-            }
+    func signOut() {
+        // Sign out logic
+        isSignedIn = false
+        email = ""
+        username = ""
+        showAlert = false
+        alertMessage = ""
 
-            // Assume a successful response means the user is signed in
-            DispatchQueue.main.async {
-                isSignedIn = true
-                showAlert = false
-            }
-        }.resume()
-    }}
+        // Remove user info from UserDefaults
+        UserDefaults.standard.removeObject(forKey: "userEmail")
+        UserDefaults.standard.removeObject(forKey: "userUsername")
+    }
+}
