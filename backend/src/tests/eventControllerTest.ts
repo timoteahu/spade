@@ -1,4 +1,5 @@
-export const testCreate = async () => {
+/* eslint-disable @typescript-eslint/no-unused-vars */
+const testCreate = async () => {
   const url = "http://localhost:3000/event/create";
 
   await fetch(url, {
@@ -8,7 +9,7 @@ export const testCreate = async () => {
     body: JSON.stringify({
       /* write post body here */
       title: "Event Number 1 title",
-      groupId: 2,
+      groupId: 3,
     }),
     method: "POST",
   }).then((res) => {
@@ -21,7 +22,7 @@ export const testCreate = async () => {
   });
 };
 
-export const testGetEvents = async () => {
+const testGetEvents = async () => {
   const url = "http://localhost:3000/event/2/get-group-events";
 
   await fetch(url, {
@@ -39,7 +40,7 @@ export const testGetEvents = async () => {
   });
 };
 
-export const testGetEvent = async () => {
+const testGetEvent = async () => {
   const url = "http://localhost:3000/event/2/get-event";
 
   await fetch(url, {
@@ -56,3 +57,5 @@ export const testGetEvent = async () => {
     res.json().then((json) => console.log(json));
   });
 };
+
+testCreate();
