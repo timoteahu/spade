@@ -1,12 +1,13 @@
 import cors from "cors";
-import express, { Request, Response } from "express";
-import helmet from "helmet";
-import rateLimit from "express-rate-limit";
-import { expressjwt } from "express-jwt";
 import dotenv from "dotenv";
+import express, { Request, Response } from "express";
+import { expressjwt } from "express-jwt";
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
+
+import { authenticateToken } from "./middleware/authMiddleware";
 import EventRouter from "./routers/eventRouter";
 import UserRouter from "./routers/userRouter";
-import { authenticateToken } from "./middleware/authMiddleware";
 /* setup express */
 const app = express();
 const port = 3000;
