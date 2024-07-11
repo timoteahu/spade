@@ -100,6 +100,8 @@ struct UsersView: View {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
+                    UserDefaults.standard.set(email, forKey: "userEmail")
+                    UserDefaults.standard.set(username, forKey: "userUsername")
                     isSignedIn = true
                     showAlert = false
                 case .failure(let error):
