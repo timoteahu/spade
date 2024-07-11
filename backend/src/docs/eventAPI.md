@@ -2,22 +2,19 @@
 
 Create an event with a description, groupId, title, etc.
 
-**URL** : `/event//`
+**URL** : `/event/create/`
 
-**Method** : `GET`
+**Method** : `POST`
 
-**Auth required** : YES
+**Auth required** : TODO
 
-**Permissions required** : None
+**Permissions required** : TODO
 
 ## Success Response
 
 **Code** : `200 OK`
 
 **Content examples**
-
-For a User with ID 1234 on the local database where that User has saved an
-email address and name information.
 
 ```json
 {

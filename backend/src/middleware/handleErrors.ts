@@ -1,20 +1,23 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 
-export class APIError extends Error {
-  statusCode: number;
-  isOperational: boolean;
-
-  constructor(message: string, statusCode: number) {
-    super(message);
-    this.statusCode = statusCode;
-    this.isOperational = true;
-
-    Error.captureStackTrace(this, this.constructor);
-  }
+interface responseError extends Error {
+  status?: number;
 }
 
+export const createError = (status: number, message: string) => {
+  const err: responseError = new Error(message);
+  err.status = status;
+  return err;
+};
+
 export const handleErrors = (
+  err: responseError,
   req: Request,
   res: Response,
   next: NextFunction,
-) => {};
+) => {
+  res.status(err.status || 500).json({
+    message: err,
+  });
+  next();
+};
