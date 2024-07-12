@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 
+import { createError } from "../middleware/handleErrors";
 import prisma from "../utils/prisma";
+import { EmptyObject } from "../utils/types";
 
 function generateRandomString(): string {
   const characters = "ABCDEFGHIJLMNOPQRSTUVWXYZ0123456789";
@@ -14,21 +16,20 @@ function generateRandomString(): string {
 }
 
 //Create Groups
-export const createGroup = async (req: Request, res: Response) => {
+
+type CreateGroupBody = {
+  name: string;
+  user_id: number;
+};
+
+export const createGroup = async (
+  req: Request<EmptyObject, CreateGroupBody>,
+  res: Response,
+) => {
   const { name, user_id } = req.body;
   const join_code = generateRandomString(); //makes a random 9 digit join code
   if (!name) {
-    return res
-      .status(400)
-      .json({
-        error: "Bad Request",
-        message: "required fields are missing",
-        missingFields: {
-          name: !name,
-          user_id: !user_id,
-        },
-      })
-      .send();
+    throw createError(400, "required argument is missing");
   }
   try {
     const group = await prisma.group.create({
@@ -41,25 +42,47 @@ export const createGroup = async (req: Request, res: Response) => {
       },
     });
 
-    return res.status(201).json({
-      message: "Created",
-      data: group,
-    });
+    return res.send({ group });
   } catch (error) {
-    return res
-      .status(500)
-      .json({
-        error: "Internal Server Error", //internal server error but could also be bc of duplicate join codes
-        message: error,
-      })
-      .send();
+    throw createError(
+      500,
+      error instanceof Error ? error.message : "Unknown error",
+    );
   }
 };
 
 //retrieves group by id
-export const getGroups = async (req: Request, res: Response) => {
+
+type GetGroupsParam = {
+  userId: string;
+};
+
+type GetGroupsRes = {
+  groups:
+    | ({
+        groups: {
+          id: number;
+          name: string;
+          createdAt: Date;
+          updatedAt: Date;
+          join_code: string | null;
+        }[];
+      } & {
+        id: number;
+        username: string;
+        email: string;
+        createdAt: Date;
+        updatedAt: Date;
+      })
+    | null;
+};
+
+export const getGroups = async (
+  req: Request<GetGroupsParam>,
+  res: Response<GetGroupsRes>,
+) => {
   const { userId } = req.params;
-  if (!userId) return res.status(400).send("No eventId added");
+  if (!userId) throw createError(400, "required argument is missing");
   try {
     const groups = await prisma.user.findUnique({
       where: {
@@ -68,27 +91,37 @@ export const getGroups = async (req: Request, res: Response) => {
       include: { groups: true },
     });
 
-    res.status(200).send(groups);
-  } catch (err) {
-    res.status(400).send(err);
+    res.end(groups);
+  } catch (error) {
+    throw createError(
+      500,
+      error instanceof Error ? error.message : "Unknown error",
+    );
   }
 };
 
 //Update or change group name or add/delete users
-export const joinGroup = async (req: Request, res: Response) => {
+
+type JoinGroupParam = {
+  user_id: string;
+  join_code: string;
+};
+
+type JoinGroupRes = {
+  id: number;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+  join_code: string | null;
+};
+
+export const joinGroup = async (
+  req: Request<JoinGroupParam>,
+  res: Response<JoinGroupRes>,
+) => {
   const { user_id, join_code } = req.params;
   if (!join_code) {
-    return res
-      .status(400)
-      .json({
-        error: "Bad Request",
-        message: "required fields are missing",
-        missingFields: {
-          join_code: !join_code,
-          user_id: !user_id,
-        },
-      })
-      .send();
+    throw createError(400, "required argument is missing");
   }
   try {
     const updatedGroup = await prisma.group.update({
@@ -99,26 +132,30 @@ export const joinGroup = async (req: Request, res: Response) => {
         },
       },
     });
-    res.status(200).send(updatedGroup);
-  } catch (err) {
-    res.status(400).send(err);
+
+    res.send(updatedGroup);
+  } catch (error) {
+    throw createError(
+      500,
+      error instanceof Error ? error.message : "Unknown error",
+    );
   }
 };
 
-export const leaveGroup = async (req: Request, res: Response) => {
+type LeaveGroupParam = {
+  user_id: string;
+  group_id: string;
+};
+
+type LeaveGroupRes = JoinGroupRes;
+
+export const leaveGroup = async (
+  req: Request<LeaveGroupParam>,
+  res: Response<LeaveGroupRes>,
+) => {
   const { user_id, group_id } = req.params;
   if (!group_id) {
-    return res
-      .status(400)
-      .json({
-        error: "Bad Request",
-        message: "required fields are missing",
-        missingFields: {
-          group_id: !group_id,
-          user_id: !user_id,
-        },
-      })
-      .send();
+    throw createError(400, "required argument is missing");
   }
   try {
     const updatedGroup = await prisma.group.update({
@@ -130,24 +167,28 @@ export const leaveGroup = async (req: Request, res: Response) => {
       },
     });
     res.status(200).send(updatedGroup);
-  } catch (err) {
-    res.status(400).send(err);
+  } catch (error) {
+    throw createError(
+      500,
+      error instanceof Error ? error.message : "Unknown error",
+    );
   }
 };
 
-export const changeGroupName = async (req: Request, res: Response) => {
+type ChangeGroupParam = {
+  group_id: string;
+  newName: string;
+};
+
+type ChangeGroupRes = JoinGroupRes;
+
+export const changeGroupName = async (
+  req: Request<ChangeGroupParam>,
+  res: Response<ChangeGroupRes>,
+) => {
   const { group_id, newName } = req.params;
   if (!group_id) {
-    return res
-      .status(400)
-      .json({
-        error: "Bad Request",
-        message: "required fields are missing",
-        missingFields: {
-          group_id: !group_id,
-        },
-      })
-      .send();
+    throw createError(400, "required argument is missing");
   }
   try {
     const updatedGroup = await prisma.group.update({
@@ -157,7 +198,10 @@ export const changeGroupName = async (req: Request, res: Response) => {
       },
     });
     res.status(200).send(updatedGroup);
-  } catch (err) {
-    res.status(400).send(err);
+  } catch (error) {
+    throw createError(
+      500,
+      error instanceof Error ? error.message : "Unknown error",
+    );
   }
 };
