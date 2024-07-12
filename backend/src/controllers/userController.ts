@@ -2,25 +2,9 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 import prisma from "../utils/prisma";
-import { EmptyObject } from "../utils/types";
-
-type UpsertUserBody = {
-  email: string;
-  username: string;
-};
-
-type UpsertUserResponse = {
-  id: number;
-  email: string;
-  username: string;
-  token: string;
-};
 
 // TODO: Reimplement with authentication
-export const upsertUser = async (
-  req: Request<EmptyObject, UpsertUserBody>,
-  res: Response<UpsertUserResponse>,
-) => {
+export const upsertUser = async (req: Request, res: Response) => {
   const { email, username } = req.body;
 
   if (!email) {

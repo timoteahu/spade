@@ -16,6 +16,7 @@ export const authenticateToken = (
     /* throw error if token is not provided */
     if (!token) throw createError(401, "token not provided");
 
+    /* checks for undefined secret key*/
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) throw createError(501, "jwt key not set");
 
