@@ -14,7 +14,7 @@ function generateRandomString(): string {
   return result;
 }
 
-//Create Groups
+/* Create Groups */
 export const createGroup = async (req: Request, res: Response) => {
   const { name, user_id } = req.body;
   const join_code = generateRandomString(); //makes a random 9 digit join code
