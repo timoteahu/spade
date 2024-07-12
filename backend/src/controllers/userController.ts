@@ -1,24 +1,10 @@
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
 import prisma from "../utils/prisma";
-import { EmptyObject } from "../utils/types";
-
-type UpsertUserBody = {
-  email: string;
-  username: string;
-};
-
-type UpsertUserResponse = {
-  id: number;
-  email: string;
-  username: string;
-};
 
 // TODO: Reimplement with authentication
-export const upsertUser = async (
-  req: Request<EmptyObject, UpsertUserBody>,
-  res: Response<UpsertUserResponse>,
-) => {
+export const upsertUser = async (req: Request, res: Response) => {
   const { email, username } = req.body;
 
   if (!email) {
@@ -38,7 +24,15 @@ export const upsertUser = async (
       },
     });
 
-    return res.send(user);
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET as string,
+      {
+        expiresIn: "1h",
+      },
+    );
+
+    return res.send({ ...user, token });
   } catch (e) {
     return res.status(400).send();
   }
