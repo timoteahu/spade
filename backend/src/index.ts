@@ -5,11 +5,8 @@ import express, { Request, Response } from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 
-<<<<<<< HEAD
 import { authenticateToken } from "./middleware/authMiddleware";
-=======
 import { handleErrors } from "./middleware/handleErrors";
->>>>>>> dea487df903534c3a67cf5f43d69f3fb29dff781
 import EventRouter from "./routers/eventRouter";
 import UserRouter from "./routers/userRouter";
 /* setup express */

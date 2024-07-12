@@ -18,9 +18,8 @@ Create an event with a description, groupId, title, etc.
 }
 ```
 
-**Auth required** : TODO
-
-**Permissions required** : TODO
+**Auth required** :
+yes, you must be a part of a group to create an event
 
 ## Success Response
 
