@@ -5,7 +5,11 @@ import express, { Request, Response } from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 
+<<<<<<< HEAD
 import { authenticateToken } from "./middleware/authMiddleware";
+=======
+import { handleErrors } from "./middleware/handleErrors";
+>>>>>>> dea487df903534c3a67cf5f43d69f3fb29dff781
 import EventRouter from "./routers/eventRouter";
 import UserRouter from "./routers/userRouter";
 /* setup express */
@@ -13,7 +17,7 @@ const app = express();
 const port = 3000;
 dotenv.config();
 
-/* middleware */
+/* request middleware */
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
@@ -34,6 +38,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello, TypeScript, ESLint, Prettier, and Express!");
 });
 
+/* response middleware */
+app.use(handleErrors);
 /* begin listening */
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
