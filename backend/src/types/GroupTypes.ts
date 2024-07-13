@@ -1,5 +1,5 @@
-import { AuthenticatedRequest, Request, Response } from "../ExpressTypes";
-import { UnknownObject } from "../ObjectTypes";
+import { AuthenticatedRequest, Request, Response } from "./ExpressTypes";
+import { UnknownObject } from "./ObjectTypes";
 
 /* Create Event*/
 export type CreateGroupBody = {

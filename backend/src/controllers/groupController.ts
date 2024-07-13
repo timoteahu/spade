@@ -5,7 +5,7 @@ import {
   CreateGroupResponse,
   GetGroupRequest,
   GetGroupResponse,
-} from "../types/ApiTypes/GroupTypes";
+} from "../types/GroupTypes";
 import prisma from "../utils/prisma";
 
 function generateRandomString(): string {
