@@ -1,6 +1,6 @@
 import { NextFunction } from "express";
 
-import * as UserType from "../@types/UserTypes";
+import * as UserType from "../types/api/UserTypes";
 import prisma from "../utils/prisma";
 
 /* ==== CREATE ====*/

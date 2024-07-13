@@ -1,6 +1,6 @@
 import { NextFunction } from "express";
 
-import * as GroupType from "../@types/GroupTypes";
+import * as GroupType from "../types/api/GroupTypes";
 import prisma from "../utils/prisma";
 
 function generateRandomString(): string {
