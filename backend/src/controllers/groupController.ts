@@ -1,7 +1,10 @@
+import { Prisma, PrismaClient } from "@prisma/client";
 import { Request, Response } from "express";
+
 
 import { createError } from "../middleware/handleErrors";
 import { EmptyObject } from "../types/ObjectTypes";
+
 import prisma from "../utils/prisma";
 
 function generateRandomString(): string {
@@ -14,6 +17,7 @@ function generateRandomString(): string {
   }
   return result;
 }
+
 
 //Create Groups
 
@@ -48,11 +52,11 @@ export const createGroup = async (
       500,
       error instanceof Error ? error.message : "Unknown error",
     );
+
   }
 };
 
 //retrieves group by id
-
 type GetGroupsParam = {
   userId: string;
 };
@@ -83,6 +87,7 @@ export const getGroups = async (
 ) => {
   const { userId } = req.params;
   if (!userId) throw createError(400, "required argument is missing");
+
   try {
     const groups = await prisma.user.findUnique({
       where: {
@@ -101,7 +106,6 @@ export const getGroups = async (
 };
 
 //Update or change group name or add/delete users
-
 type JoinGroupParam = {
   user_id: string;
   join_code: string;
@@ -119,6 +123,7 @@ export const joinGroup = async (
   req: Request<JoinGroupParam>,
   res: Response<JoinGroupRes>,
 ) => {
+
   const { user_id, join_code } = req.params;
   if (!join_code) {
     throw createError(400, "required argument is missing");
@@ -132,6 +137,7 @@ export const joinGroup = async (
         },
       },
     });
+
 
     res.send(updatedGroup);
   } catch (error) {
@@ -153,6 +159,7 @@ export const leaveGroup = async (
   req: Request<LeaveGroupParam>,
   res: Response<LeaveGroupRes>,
 ) => {
+
   const { user_id, group_id } = req.params;
   if (!group_id) {
     throw createError(400, "required argument is missing");
@@ -167,6 +174,7 @@ export const leaveGroup = async (
       },
     });
     res.status(200).send(updatedGroup);
+
   } catch (error) {
     throw createError(
       500,
@@ -186,6 +194,7 @@ export const changeGroupName = async (
   req: Request<ChangeGroupParam>,
   res: Response<ChangeGroupRes>,
 ) => {
+
   const { group_id, newName } = req.params;
   if (!group_id) {
     throw createError(400, "required argument is missing");
@@ -198,10 +207,12 @@ export const changeGroupName = async (
       },
     });
     res.status(200).send(updatedGroup);
+
   } catch (error) {
     throw createError(
       500,
       error instanceof Error ? error.message : "Unknown error",
     );
+
   }
 };
