@@ -1,18 +1,28 @@
-import type {
+import {
+  ParamsDictionary,
   Request as ExpressRequest,
   Response as ExpressResponse,
-} from "express";
+} from "express-serve-static-core";
 
-import { EmptyObject, UnknownObject } from "./types";
+/* safe object types */
+import { EmptyObject, UnknownObject } from "./ObjectTypes";
 
+/* Typed Request */
+/*  - passes generics of mentioned names into Request   */
+/*  - this then passes the types into Express's Request */
+/*  - will be of unknown Object unless specified          */
+/* useful link: https://greenydev.com/blog/extend-express-types/ */
 export type Request<
-  RequestParams = UnknownObject,
-  RequestBody = UnknownObject,
-  RequestQuery = UnknownObject,
-> = ExpressRequest<RequestParams, UnknownObject, RequestBody, RequestQuery>;
+  Params = UnknownObject,
+  ReqBody = UnknownObject,
+  Query = UnknownObject,
+> = ExpressRequest<Params, UnknownObject, ReqBody, Query>;
 
-export type ResError = { error: string };
+/* sends this in body when there is an error */
+export type ResError = { message: string };
 
+/* Must Specify Response Body Type or it will be empty*/
+/* Strictly Types Json function, must either be of ResBody (Type specified) or ResError */
 export type Response<ResBody = EmptyObject> = ExpressResponse & {
   json: (body: ResBody | ResError) => ExpressResponse;
 };

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 
 import { createError } from "../middleware/handleErrors";
+import { EmptyObject } from "../utils/ObjectTypes";
 import prisma from "../utils/prisma";
-import { EmptyObject } from "../utils/types";
 
 function generateRandomString(): string {
   const characters = "ABCDEFGHIJLMNOPQRSTUVWXYZ0123456789";
