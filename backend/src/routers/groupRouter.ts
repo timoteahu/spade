@@ -5,9 +5,6 @@ import * as groups from "../controllers/groupController";
 const router = express.Router();
 
 router.post("/", groups.createGroup);
-router.get("/:userId", groups.getGroups);
-router.patch("/join/:groupId", groups.joinGroup);
-router.patch("/leave/:groupId", groups.leaveGroup);
-router.patch("/name/:groupId", groups.changeGroupName);
+router.get("/:groupId", groups.getGroup);
 
 export default router;

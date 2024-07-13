@@ -1,41 +1,13 @@
 import { NextFunction } from "express";
 
 /* import types */
-import {
-  CreateEventRequest,
-  CreateEventResponse,
-  DeleteEventRequest,
-  DeleteEventResponse,
-  GetEventRequest,
-  GetEventResponse,
-  UpdateEventRequest,
-  UpdateEventResponse,
-} from "../types/EventTypes";
+import * as EventType from "../types/EventTypes";
 import prisma from "../utils/prisma";
-/* == status codes == */
-// 200         OK
-// 201         Created
-// 202         Accepted
-// 204         No Content
-// 206         Partial Content
-
-// 400         Bad Request
-// 401         Unauthorized
-// 404         Not Found
-
-/* event schema */
-// id          Int      @id @default(autoincrement())
-// title       String
-// description String?
-// groupId     Int
-// group       Group    @relation(fields: [groupId], references: [id])
-// createdAt   DateTime @default(now())
-// updatedAt   DateTime @updatedAt
 
 /* ==== CREATE ====*/
 export const createEvent = async (
-  req: CreateEventRequest,
-  res: CreateEventResponse,
+  req: EventType.CreateEventRequest,
+  res: EventType.CreateEventResponse,
   next: NextFunction,
 ) => {
   try {
@@ -55,39 +27,10 @@ export const createEvent = async (
   }
 };
 
-// /* ==== READ ==== */
-// export const getEvents = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ) => {
-//   try {
-//     /* get groupId from params */
-//     const { groupId } = req.params;
-
-//     /* catch errors */
-//     if (!groupId) throw createError(400, "eventId argument is missing");
-
-//     /* grabs all events within a group */
-//     const event = await prisma.event.findMany({
-//       where: {
-//         groupId: {
-//           equals: parseInt(groupId),
-//         },
-//       },
-//     });
-
-//     /* send to client */
-//     res.status(200).send(event);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
 // grabs event from event Id
 export const getEvent = async (
-  req: GetEventRequest,
-  res: GetEventResponse,
+  req: EventType.GetEventRequest,
+  res: EventType.GetEventResponse,
   next: NextFunction,
 ) => {
   try {
@@ -107,8 +50,8 @@ export const getEvent = async (
 
 /* ==== Update ====*/
 export const updateEvent = async (
-  req: UpdateEventRequest,
-  res: UpdateEventResponse,
+  req: EventType.UpdateEventRequest,
+  res: EventType.UpdateEventResponse,
   next: NextFunction,
 ) => {
   try {
@@ -133,8 +76,8 @@ export const updateEvent = async (
 
 /* ==== DELETE ====*/
 export const deleteEvent = async (
-  req: DeleteEventRequest,
-  res: DeleteEventResponse,
+  req: EventType.DeleteEventRequest,
+  res: EventType.DeleteEventResponse,
   next: NextFunction,
 ) => {
   try {
