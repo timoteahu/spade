@@ -8,9 +8,9 @@ Grab an event using its ID
 
 **Method** : `GET`
 
-**Auth required** : TODO
+**Auth required** :
 
-**Permissions required** : TODO
+- must be in group to see event
 
 ## Success Response
 

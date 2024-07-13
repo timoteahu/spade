@@ -1,8 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction } from "express";
 
 import { createError } from "../middleware/handleErrors";
+import { Request, Response } from "../types/ExpressTypes";
+import { EmptyObject } from "../types/ObjectTypes";
 import prisma from "../utils/prisma";
-
 /* == status codes == */
 // 200         OK
 // 201         Created
@@ -23,25 +24,25 @@ import prisma from "../utils/prisma";
 // createdAt   DateTime @default(now())
 // updatedAt   DateTime @updatedAt
 
+type createEventBody = {
+  title: string;
+  description: string;
+  groupId: number;
+};
+
 /* ==== CREATE ====*/
 export const createEvent = async (
-  req: Request,
+  req: Request<EmptyObject, createEventBody>,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    /* parse body*/
-    const { title, description, groupId } = req.body;
-
-    /* catch errors */
-    if (!title) throw createError(400, "required argument is missing");
-
     // create from prisma schema
     const event = await prisma.event.create({
       data: {
-        title: title,
-        description: description,
-        groupId: parseInt(groupId),
+        title: req.body.title,
+        description: req.body.description,
+        groupId: req.body.groupId,
       },
     });
 
