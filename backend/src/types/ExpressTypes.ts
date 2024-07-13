@@ -27,6 +27,10 @@ export type Response<ResBody = EmptyObject> = ExpressResponse & {
 };
 
 /* Authenticated Request */
-export type AuthenticatedRequest = Request & {
+export type AuthenticatedRequest<
+  Params = UnknownObject,
+  ReqBody = UnknownObject,
+  Query = UnknownObject,
+> = Request<Params, ReqBody, Query> & {
   payload?: JwtPayload;
 };

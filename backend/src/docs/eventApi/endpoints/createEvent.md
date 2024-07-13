@@ -19,7 +19,8 @@ Create an event with a description, groupId, title, etc.
 ```
 
 **Auth required** :
-yes, you must be a part of a group to create an event
+
+- must be in group
 
 ## Success Response
 
