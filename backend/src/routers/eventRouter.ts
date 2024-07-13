@@ -11,11 +11,11 @@ import {
 
 const router = express.Router();
 
-router.post("/create", createEvent);
-router.get("/:groupId/get-group-events", getEvents);
-router.get("/:eventId/get-event", getEvent);
-router.post("/:eventId/description", changeEventDesc);
-router.post("/:eventId/title", changeEventTitle);
-router.get("/:eventId/delete", deleteEvent);
+router.post("/", createEvent);
+router.get("/:groupId", getEvents);
+router.get("/event/:eventId", getEvent);
+router.patch("/description/:eventId", changeEventDesc);
+router.patch("/title/:eventId", changeEventTitle);
+router.delete("/:eventId", deleteEvent);
 
 export default router;

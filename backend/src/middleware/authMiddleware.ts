@@ -1,6 +1,11 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
+import {
+  AuthenticatedRequest,
+  Request,
+  Response,
+} from "./../types/ExpressTypes";
 import { createError } from "./handleErrors";
 
 export const authenticateToken = (
@@ -23,7 +28,7 @@ export const authenticateToken = (
     /* verify */
     const decoded = jwt.verify(token, jwtSecret) as JwtPayload;
 
-    req.payload = decoded;
+    (req as AuthenticatedRequest).payload = decoded;
 
     next();
   } catch (error) {
