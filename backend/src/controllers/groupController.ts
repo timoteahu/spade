@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { createError } from "../middleware/handleErrors";
-import { EmptyObject } from "../utils/ObjectTypes";
+import { EmptyObject } from "../types/ObjectTypes";
 import prisma from "../utils/prisma";
 
 function generateRandomString(): string {

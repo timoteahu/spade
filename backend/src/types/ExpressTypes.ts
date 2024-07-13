@@ -1,10 +1,9 @@
 import {
-  ParamsDictionary,
   Request as ExpressRequest,
   Response as ExpressResponse,
 } from "express-serve-static-core";
+import { JwtPayload } from "jsonwebtoken";
 
-/* safe object types */
 import { EmptyObject, UnknownObject } from "./ObjectTypes";
 
 /* Typed Request */
@@ -25,4 +24,9 @@ export type ResError = { message: string };
 /* Strictly Types Json function, must either be of ResBody (Type specified) or ResError */
 export type Response<ResBody = EmptyObject> = ExpressResponse & {
   json: (body: ResBody | ResError) => ExpressResponse;
+};
+
+/* Authenticated Request */
+export type AuthenticatedRequest = Request & {
+  payload?: JwtPayload;
 };
