@@ -5,7 +5,7 @@ import {
   AuthenticatedRequest,
   Request,
   Response,
-} from "./../types/ExpressTypes";
+} from "../@types/ExpressTypes";
 import { createError } from "./handleErrors";
 
 export const authenticateToken = (

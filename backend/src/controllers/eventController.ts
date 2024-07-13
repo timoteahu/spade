@@ -1,7 +1,7 @@
 import { NextFunction } from "express";
 
 /* import types */
-import * as EventType from "../types/EventTypes";
+import * as EventType from "../@types/EventTypes";
 import prisma from "../utils/prisma";
 
 /* ==== CREATE ====*/
