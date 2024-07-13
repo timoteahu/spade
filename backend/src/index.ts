@@ -49,3 +49,4 @@ app.listen(port, () => {
 //     algorithms: ["HS256"],
 //   }).unless({ path: ["/"] }),
 // );
+export default app;
