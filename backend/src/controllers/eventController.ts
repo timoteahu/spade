@@ -10,7 +10,7 @@ import {
   GetEventResponse,
   UpdateEventRequest,
   UpdateEventResponse,
-} from "../types/Api Types/EventTypes";
+} from "../types/ApiTypes/EventTypes";
 import prisma from "../utils/prisma";
 /* == status codes == */
 // 200         OK
