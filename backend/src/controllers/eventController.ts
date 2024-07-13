@@ -1,8 +1,16 @@
 import { NextFunction } from "express";
 
-import { createError } from "../middleware/handleErrors";
-import { Request, Response } from "../types/ExpressTypes";
-import { EmptyObject } from "../types/ObjectTypes";
+/* import types */
+import {
+  CreateEventRequest,
+  CreateEventResponse,
+  DeleteEventRequest,
+  DeleteEventResponse,
+  GetEventRequest,
+  GetEventResponse,
+  UpdateEventRequest,
+  UpdateEventResponse,
+} from "../types/Api Types/EventTypes";
 import prisma from "../utils/prisma";
 /* == status codes == */
 // 200         OK
@@ -24,85 +32,73 @@ import prisma from "../utils/prisma";
 // createdAt   DateTime @default(now())
 // updatedAt   DateTime @updatedAt
 
-type createEventBody = {
-  title: string;
-  description: string;
-  groupId: number;
-};
-
 /* ==== CREATE ====*/
 export const createEvent = async (
-  req: Request<EmptyObject, createEventBody>,
-  res: Response,
+  req: CreateEventRequest,
+  res: CreateEventResponse,
   next: NextFunction,
 ) => {
   try {
-    // create from prisma schema
+    const { title, description, groupId } = req.body;
+
     const event = await prisma.event.create({
       data: {
-        title: req.body.title,
-        description: req.body.description,
-        groupId: req.body.groupId,
+        title: title,
+        description: description,
+        groupId: groupId,
       },
     });
 
-    /* send status to client */
     res.status(201).send(event);
   } catch (err) {
     next(err);
   }
 };
 
-/* ==== READ ==== */
-export const getEvents = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    /* get groupId from params */
-    const { groupId } = req.params;
+// /* ==== READ ==== */
+// export const getEvents = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction,
+// ) => {
+//   try {
+//     /* get groupId from params */
+//     const { groupId } = req.params;
 
-    /* catch errors */
-    if (!groupId) throw createError(400, "eventId argument is missing");
+//     /* catch errors */
+//     if (!groupId) throw createError(400, "eventId argument is missing");
 
-    /* grabs all events within a group */
-    const event = await prisma.event.findMany({
-      where: {
-        groupId: {
-          equals: parseInt(groupId),
-        },
-      },
-    });
+//     /* grabs all events within a group */
+//     const event = await prisma.event.findMany({
+//       where: {
+//         groupId: {
+//           equals: parseInt(groupId),
+//         },
+//       },
+//     });
 
-    /* send to client */
-    res.status(200).send(event);
-  } catch (err) {
-    next(err);
-  }
-};
+//     /* send to client */
+//     res.status(200).send(event);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 
 // grabs event from event Id
 export const getEvent = async (
-  req: Request,
-  res: Response,
+  req: GetEventRequest,
+  res: GetEventResponse,
   next: NextFunction,
 ) => {
   try {
-    /* get groupId from params */
     const { eventId } = req.params;
 
-    /* catch errors */
-    if (!eventId) throw createError(400, "eventId argument is missing");
-
-    /* grabs event from it's ID */
     const event = await prisma.event.findUnique({
       where: {
-        id: parseInt(eventId),
+        id: eventId,
       },
     });
 
-    /* send to client */
     res.status(200).send(event ? event : {});
   } catch (err) {
     next(err);
@@ -110,91 +106,48 @@ export const getEvent = async (
 };
 
 /* ==== Update ====*/
-export const changeEventDesc = async (
-  req: Request,
-  res: Response,
+export const updateEvent = async (
+  req: UpdateEventRequest,
+  res: UpdateEventResponse,
   next: NextFunction,
 ) => {
   try {
-    /* get groupId from params */
     const { eventId } = req.params;
-    const { description } = req.body;
+    const { title, description } = req.body;
 
-    /* catches errors */
-    if (!eventId || !description)
-      throw createError(400, "required argument is missing");
-
-    /* updates event from event schema */
     const updatedEvent = await prisma.event.update({
       where: {
-        id: parseInt(eventId),
+        id: eventId,
       },
       data: {
+        title: title,
         description: description,
       },
     });
 
-    /* sends new event to client */
     res.status(200).send(updatedEvent);
-  } catch (err) {
-    next(err);
-  }
-};
-
-export const changeEventTitle = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    // get groupId from params
-    const { eventId } = req.params;
-    const { title } = req.body;
-
-    /* catch errors */
-    if (!eventId || !title)
-      throw createError(400, "required argument is missing");
-
-    // grabs all events within a group
-    const updatedEvent = await prisma.event.update({
-      where: {
-        id: parseInt(eventId),
-      },
-      data: {
-        title: title,
-      },
-    });
-
-    /* sends new event to client */
-    res.status(200).send(updatedEvent);
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
 /* ==== DELETE ====*/
 export const deleteEvent = async (
-  req: Request,
-  res: Response,
+  req: DeleteEventRequest,
+  res: DeleteEventResponse,
   next: NextFunction,
 ) => {
   try {
-    /* get groupId from params */
     const { eventId } = req.params;
 
-    /* catch errors */
-    if (!eventId) throw createError(400, "eventId argument is missing");
-
-    /* grabs and deletes an event from it's id */
     const event = await prisma.event.delete({
       where: {
-        id: parseInt(eventId),
+        id: eventId,
       },
     });
 
-    /* sends deleted event to client */
     res.status(200).send(event);
-  } catch (err) {
-    next();
+  } catch (error) {
+    next(error);
   }
 };
