@@ -1,10 +1,10 @@
 [All Endpoints](../EventApi.md)
 
-# Change Description
+# Update Event
 
-change an Event description using it's id and a new description
+change an Event title using it's id and a new title
 
-**URL** : `event/:eventId/description`
+**URL** : `event/:groupId/eventId`
 
 **Method** : `POST`
 
@@ -12,13 +12,13 @@ change an Event description using it's id and a new description
 
 ```json
 {
-  "description": "event description..."
+  "title": "Event Number 1 new-title"
 }
 ```
 
-**Auth required** : TODO
+**Auth required** :
 
-**Permissions required** : TODO
+- Must be in group
 
 ## Success Response
 
@@ -29,7 +29,7 @@ change an Event description using it's id and a new description
 ```json
 {
   "id": 13,
-  "title": "Event Number 1 title",
+  "title": "Event Number 1 new-title",
   "description": "event description...",
   "groupId": 2,
   "createdAt": "2024-07-10T22:10:27.687Z",

@@ -1,11 +1,7 @@
-import { NextFunction } from "express";
+import { NextFunction, Response } from "express";
 
-import {
-  CreateGroupRequest,
-  CreateGroupResponse,
-  GetGroupRequest,
-  GetGroupResponse,
-} from "../types/ApiTypes/GroupTypes";
+import { createError } from "../middleware/handleErrors";
+import { AuthenticatedRequest } from "../types/AuthenticationTypes";
 import prisma from "../utils/prisma";
 
 function generateRandomString(): string {
@@ -21,12 +17,16 @@ function generateRandomString(): string {
 
 //Create Groups
 export const createGroup = async (
-  req: CreateGroupRequest,
-  res: CreateGroupResponse,
+  req: AuthenticatedRequest,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
-    const { name, userid } = req.body;
+    const { name, userId } = req.body;
+
+    if (!name || !userId)
+      throw createError(400, "Required argument not provided");
+
     const join_code = generateRandomString(); //makes a random 9 digit join code
 
     const group = await prisma.group.create({
@@ -34,7 +34,7 @@ export const createGroup = async (
         name: name,
         join_code: join_code,
         members: {
-          connect: { id: userid }, //adds current user into the group by default
+          connect: { id: userId }, //adds current user into the group by default
         },
       },
     });
@@ -46,9 +46,9 @@ export const createGroup = async (
 };
 
 //retrieves group by id
-export const getGroups = async (
-  req: GetGroupRequest,
-  res: GetGroupResponse,
+export const getGroup = async (
+  req: AuthenticatedRequest,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
@@ -56,7 +56,7 @@ export const getGroups = async (
 
     const groups = await prisma.user.findUnique({
       where: {
-        id: userId,
+        id: parseInt(userId),
       },
       include: { groups: true },
     });
@@ -66,108 +66,3 @@ export const getGroups = async (
     next(error);
   }
 };
-
-//Update or change group name or add/delete users
-// type JoinGroupParam = {
-//   user_id: string;
-//   join_code: string;
-// };
-
-// type JoinGroupRes = {
-//   id: number;
-//   name: string;
-//   createdAt: Date;
-//   updatedAt: Date;
-//   join_code: string | null;
-// };
-
-// export const joinGroup = async (
-//   req: Request<JoinGroupParam>,
-//   res: Response<JoinGroupRes>,
-// ) => {
-//   const { user_id, join_code } = req.params;
-//   if (!join_code) {
-//     throw createError(400, "required argument is missing");
-//   }
-//   try {
-//     const updatedGroup = await prisma.group.update({
-//       where: { join_code: join_code }, //searches by join code
-//       data: {
-//         members: {
-//           connect: { id: Number(user_id) }, //adds user with the given user_id
-//         },
-//       },
-//     });
-
-//     res.send(updatedGroup);
-//   } catch (error) {
-//     throw createError(
-//       500,
-//       error instanceof Error ? error.message : "Unknown error",
-//     );
-//   }
-// };
-
-// type LeaveGroupParam = {
-//   user_id: string;
-//   group_id: string;
-// };
-
-// type LeaveGroupRes = JoinGroupRes;
-
-// export const leaveGroup = async (
-//   req: Request<LeaveGroupParam>,
-//   res: Response<LeaveGroupRes>,
-// ) => {
-//   const { user_id, group_id } = req.params;
-//   if (!group_id) {
-//     throw createError(400, "required argument is missing");
-//   }
-//   try {
-//     const updatedGroup = await prisma.group.update({
-//       where: { id: Number(group_id) }, //finds by group id
-//       data: {
-//         members: {
-//           disconnect: { id: Number(user_id) }, //use disconnect to remove user_id from this group
-//         },
-//       },
-//     });
-//     res.status(200).send(updatedGroup);
-//   } catch (error) {
-//     throw createError(
-//       500,
-//       error instanceof Error ? error.message : "Unknown error",
-//     );
-//   }
-// };
-
-// type ChangeGroupParam = {
-//   group_id: string;
-//   newName: string;
-// };
-
-// type ChangeGroupRes = JoinGroupRes;
-
-// export const changeGroupName = async (
-//   req: Request<ChangeGroupParam>,
-//   res: Response<ChangeGroupRes>,
-// ) => {
-//   const { group_id, newName } = req.params;
-//   if (!group_id) {
-//     throw createError(400, "required argument is missing");
-//   }
-//   try {
-//     const updatedGroup = await prisma.group.update({
-//       where: { id: Number(group_id) }, //searches by group_id
-//       data: {
-//         name: newName, //changes name to newName
-//       },
-//     });
-//     res.status(200).send(updatedGroup);
-//   } catch (error) {
-//     throw createError(
-//       500,
-//       error instanceof Error ? error.message : "Unknown error",
-//     );
-//   }
-// };

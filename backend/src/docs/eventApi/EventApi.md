@@ -5,9 +5,8 @@
 1. [Create Event](./endpoints/createEvent.md)
 2. [Get Event](endpoints/getEvent.md)
 3. [Get Group Events](endpoints/getGroupEvents.md)
-4. [Change Event Title](endpoints/changeTitle.md)
-5. [Change Event Description](endpoints/changeDescription.md)
-6. [Delete Event](endpoints/deleteEvent.md)
+4. [Change Event Title](endpoints/updateEvent.md)
+5. [Delete Event](endpoints/deleteEvent.md)
 
 ## Endpoints
 
@@ -23,13 +22,9 @@ Retrieve details of a specific event using its ID.
 
 Fetch all events associated with a particular group.
 
-### 4. [Change Event Title](endpoints/changeTitle.md)
+### 4. [Update Event](endpoints/updateEvent.md)
 
-Update the title of an existing event.
-
-### 5. [Change Event Description](endpoints/changeDescription.md)
-
-Modify the description of an existing event.
+Update the title or description of an existing event.
 
 ### 6. [Delete Event](endpoints/deleteEvent.md)
 

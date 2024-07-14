@@ -5,9 +5,10 @@ import express, { Request, Response } from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 
-import { authenticateToken } from "./middleware/authMiddleware";
+import { verifyToken } from "./middleware/authMiddleware";
 import { handleErrors } from "./middleware/handleErrors";
 import EventRouter from "./routers/eventRouter";
+import GroupRouter from "./routers/groupRouter";
 import UserRouter from "./routers/userRouter";
 /* setup express */
 const app = express();
@@ -28,7 +29,8 @@ app.use(limiter);
 
 /* go to routes */
 app.use("/user", UserRouter);
-app.use("/event", authenticateToken, EventRouter);
+app.use("/event", verifyToken, EventRouter);
+app.use("/group", verifyToken, GroupRouter);
 
 /* frontend/other */
 app.get("/", (req: Request, res: Response) => {
@@ -49,3 +51,4 @@ app.listen(port, () => {
 //     algorithms: ["HS256"],
 //   }).unless({ path: ["/"] }),
 // );
+export default app;

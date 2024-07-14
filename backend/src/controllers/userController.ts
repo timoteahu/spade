@@ -1,20 +1,8 @@
 import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
 import { createError } from "../middleware/handleErrors";
 import prisma from "../utils/prisma";
-
-/* Schema */
-// model User {
-//   id        Int      @id @default(autoincrement())
-//   username  String   @unique
-//   email     String   @unique
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   groups    Group[]  @relation("GroupMembers")
-//   User_A    User[]   @relation("UserFriends")
-//   User_B    User[]   @relation("UserFriends")
-// }
-
 /* ==== CREATE ====*/
 export const createUser = async (
   req: Request,
@@ -22,14 +10,7 @@ export const createUser = async (
   next: NextFunction,
 ) => {
   try {
-    /* parse body*/
     const { username, email } = req.body;
-
-    /* catch errors */
-    if (!username || !email)
-      throw createError(400, "required argument is missing");
-
-    // create from prisma schema
     const user = await prisma.user.create({
       data: {
         username: username,
@@ -37,7 +18,6 @@ export const createUser = async (
       },
     });
 
-    /* send status to client */
     res.status(201).send(user);
   } catch (err) {
     next(err);
@@ -45,66 +25,61 @@ export const createUser = async (
 };
 
 /* ==== READ ==== */
-// grabs User from UserId
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    /* grabs email... pass from body */
+    const { email } = req.body;
+    if (!email) throw createError(400, "No email provided");
+
+    /* finds user from email */
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    if (!user) throw createError(400, "No user found");
+
+    /* authentication payload */
+    const payload = {
+      userId: user.id,
+    };
+
+    /* checks for undefined secret key*/
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) throw createError(501, "jwt key not set");
+    const token = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
+
+    res.status(200).send(token);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getUser = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    /* get userId from params */
     const { userId } = req.params;
 
-    /* catch errors */
-    if (!userId) throw createError(400, "userId argument is missing");
-
-    /* grabs event from it's ID */
     const user = await prisma.user.findUnique({
       where: {
         id: parseInt(userId),
       },
     });
 
-    /* send to client */
     res.status(200).send(user ? user : {});
   } catch (err) {
     next(err);
   }
 };
 
-/* ==== Update ====*/
-export const addToGroup = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    /* get groupId from params */
-    const { userId } = req.params;
-    const { groupId } = req.body;
-
-    /* catches errors */
-    if (!groupId || !userId)
-      throw createError(400, "required argument is missing");
-
-    /* updates user from event schema */
-    const user = await prisma.user.update({
-      where: {
-        id: parseInt(userId),
-      },
-      data: {
-        groups: {
-          connect: [{ id: groupId }],
-        },
-      },
-    });
-
-    /* sends user to client */
-    res.status(200).send(user);
-  } catch (err) {
-    next(err);
-  }
-};
+/* ==== UPDATE ==== */
 
 /* ==== DELETE ====*/
 export const deleteUser = async (
@@ -113,20 +88,14 @@ export const deleteUser = async (
   next: NextFunction,
 ) => {
   try {
-    /* get userId from params */
     const { userId } = req.params;
 
-    /* catch errors */
-    if (!userId) throw createError(400, "userId argument is missing");
-
-    /* grabs and deletes an event from it's id */
     const user = await prisma.user.delete({
       where: {
         id: parseInt(userId),
       },
     });
 
-    /* sends deleted user to client */
     res.status(200).send(user);
   } catch (err) {
     next();
