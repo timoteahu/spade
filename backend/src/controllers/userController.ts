@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
 
+import { createError } from "../middleware/handleErrors";
 import prisma from "../utils/prisma";
-
 /* ==== CREATE ====*/
 export const createUser = async (
   req: Request,
@@ -24,6 +25,41 @@ export const createUser = async (
 };
 
 /* ==== READ ==== */
+
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    /* grabs email... pass from body */
+    const { email } = req.body;
+    if (!email) throw createError(400, "No email provided");
+
+    /* finds user from email */
+    const user = await prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+    if (!user) throw createError(400, "No user found");
+
+    /* authentication payload */
+    const payload = {
+      userId: user.id,
+    };
+
+    /* checks for undefined secret key*/
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) throw createError(501, "jwt key not set");
+    const token = jwt.sign(payload, jwtSecret);
+
+    res.status(200).send(token);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const getUser = async (
   req: Request,
   res: Response,

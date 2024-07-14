@@ -10,13 +10,13 @@ Grab all events of a group using its ID
 
 **Auth required** :
 
-- must be in group
+- Must be in group
 
-## Success Response
+## success response
 
-**Code** : `200 OK`
+**code** : `200 ok`
 
-**Content examples**
+**content examples**
 
 ```json
 [

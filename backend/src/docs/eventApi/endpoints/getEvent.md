@@ -10,7 +10,7 @@ Grab an event using its ID
 
 **Auth required** :
 
-- must be in group to see event
+- Must be in group
 
 ## Success Response
 
