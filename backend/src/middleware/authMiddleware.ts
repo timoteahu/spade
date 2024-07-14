@@ -41,9 +41,10 @@ export const checkMembership = async (
   try {
     /* load arguments and pass errors */
     const payload = req.payload;
-    const groupId = req.body.groupid;
+    const groupId = req.params.groupId;
     if (!groupId) throw createError(401, "GroupId not provided");
-    if (!payload) throw createError(401, "payload not provided");
+    console.log(payload);
+    if (!payload) throw createError(401, "Payload not provided");
 
     const { userId } = payload;
     if (!userId) throw createError(401, "Token does not contain user");
@@ -55,15 +56,14 @@ export const checkMembership = async (
       include: {
         members: {
           where: {
-            id: userId,
+            id: parseInt(userId),
           },
         },
       },
     });
 
-    console.log(user);
-    console.log("testing");
-    if (!user) throw createError(401, "User is not a part of this group");
+    if (!user || user.members.length == 0)
+      throw createError(401, "User is not a part of this group");
 
     next();
   } catch (error) {

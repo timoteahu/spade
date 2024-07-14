@@ -14,7 +14,7 @@ export const createEvent = async (
     const { title, description, groupId } = req.body;
 
     if (!title || !description || !groupId)
-      throw createError(401, "Required properties not found");
+      throw createError(400, "Required argument not provided");
 
     const event = await prisma.event.create({
       data: {
@@ -39,6 +39,8 @@ export const getEvent = async (
   try {
     const { eventId } = req.params;
 
+    if (!eventId) throw createError(400, "Required argument not provided");
+
     const event = await prisma.event.findUnique({
       where: {
         id: parseInt(eventId),
@@ -60,6 +62,8 @@ export const updateEvent = async (
   try {
     const { eventId } = req.params;
     const { title, description } = req.body;
+
+    if (!eventId) throw createError(400, "Required argument not provided");
 
     const updatedEvent = await prisma.event.update({
       where: {
@@ -85,6 +89,8 @@ export const deleteEvent = async (
 ) => {
   try {
     const { eventId } = req.params;
+
+    if (!eventId) throw createError(400, "Required argument not provided");
 
     const event = await prisma.event.delete({
       where: {
