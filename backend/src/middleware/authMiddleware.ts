@@ -39,12 +39,14 @@ export const checkMembership = async (
   next: NextFunction,
 ) => {
   try {
+    /* load arguments and pass errors */
     const payload = req.payload;
     const groupId = req.body.groupid;
-    const { userId } = payload;
-
-    if (!userId) throw createError(401, "Token does not contain user");
     if (!groupId) throw createError(401, "GroupId not provided");
+    if (!payload) throw createError(401, "payload not provided");
+
+    const { userId } = payload;
+    if (!userId) throw createError(401, "Token does not contain user");
 
     const user = await prisma.group.findUnique({
       where: {

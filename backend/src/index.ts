@@ -27,8 +27,8 @@ const limiter = rateLimit({
 app.use(limiter);
 
 /* go to routes */
-app.use("/user", UserRouter);
-app.use("/event", verifyToken, EventRouter);
+app.use("/user", verifyToken, UserRouter);
+app.use("/event", EventRouter);
 
 /* frontend/other */
 app.get("/", (req: Request, res: Response) => {
