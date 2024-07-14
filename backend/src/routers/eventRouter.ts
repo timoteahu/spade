@@ -4,15 +4,15 @@ import {
   createEvent,
   deleteEvent,
   getEvent,
+  updateEvent,
 } from "../controllers/eventController";
+import { checkMembership } from "../middleware/authMiddleware";
 
 const router = express.Router();
 
-router.post("/", createEvent);
-//router.get("/:groupId", getEvents);
-router.get("/event/:eventId", getEvent);
-//router.patch("/description/:eventId", changeEventDesc);
-//router.patch("/title/:eventId", changeEventTitle);
+router.post("/", checkMembership, createEvent);
+router.get("/:eventId", getEvent);
+router.patch("/:eventId", updateEvent);
 router.delete("/:eventId", deleteEvent);
 
 export default router;
