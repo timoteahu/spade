@@ -40,14 +40,12 @@ export const checkMembership = async (
 ) => {
   try {
     /* load arguments and pass errors */
-    const payload = req.payload;
     const groupId = req.params.groupId;
-    if (!groupId) throw createError(401, "GroupId not provided");
-    console.log(payload);
-    if (!payload) throw createError(401, "Payload not provided");
-
-    const { userId } = payload;
-    if (!userId) throw createError(401, "Token does not contain user");
+    const userId = req?.payload?.userId;
+    if (!groupId)
+      throw createError(401, "Parameters do not contain required values");
+    if (!userId)
+      throw createError(401, "Token does not contain required payload");
 
     const user = await prisma.group.findUnique({
       where: {
