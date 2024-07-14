@@ -2,7 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 import { createError } from "../middleware/handleErrors";
+import { AuthenticatedRequest } from "../types/AuthenticationTypes";
 import prisma from "../utils/prisma";
+
 /* ==== CREATE ====*/
 export const createUser = async (
   req: Request,
@@ -74,12 +76,66 @@ export const getUser = async (
     });
 
     res.status(200).send(user ? user : {});
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
 /* ==== UPDATE ==== */
+export const joinGroup = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const userId = req?.payload?.userId;
+    const groupId = req.body.groupId;
+
+    /* error handling */
+    if (!userId || !groupId)
+      throw createError(400, "Required argument not provided");
+
+    const updatedGroup = await prisma.group.update({
+      where: { id: groupId },
+      data: {
+        members: {
+          connect: { id: parseInt(userId) }, //adds user with the given user_id
+        },
+      },
+    });
+    res.status(200).send(updatedGroup);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const leaveGroup = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const userId = req?.payload?.userId;
+    const groupId = req.body.groupId;
+
+    /* error handling */
+    if (!userId || !groupId)
+      throw createError(400, "Required argument not provided");
+
+    const updatedGroup = await prisma.group.update({
+      where: { id: groupId },
+      data: {
+        members: {
+          disconnect: { id: parseInt(userId) },
+        },
+      },
+    });
+
+    res.status(200).send(updatedGroup);
+  } catch (error) {
+    next(error);
+  }
+};
 
 /* ==== DELETE ====*/
 export const deleteUser = async (
