@@ -1,12 +1,11 @@
-import { NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 
-import * as UserType from "../types/api/UserTypes";
 import prisma from "../utils/prisma";
 
 /* ==== CREATE ====*/
 export const createUser = async (
-  req: UserType.CreateUserRequest,
-  res: UserType.CreateUserResponse,
+  req: Request,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
@@ -26,8 +25,8 @@ export const createUser = async (
 
 /* ==== READ ==== */
 export const getUser = async (
-  req: UserType.GetUserRequest,
-  res: UserType.GetUserResponse,
+  req: Request,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
@@ -35,7 +34,7 @@ export const getUser = async (
 
     const user = await prisma.user.findUnique({
       where: {
-        id: userId,
+        id: parseInt(userId),
       },
     });
 
@@ -47,8 +46,8 @@ export const getUser = async (
 
 /* ==== DELETE ====*/
 export const deleteUser = async (
-  req: UserType.DeleteUserRequest,
-  res: UserType.DeleteUserResponse,
+  req: Request,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
@@ -56,7 +55,7 @@ export const deleteUser = async (
 
     const user = await prisma.user.delete({
       where: {
-        id: userId,
+        id: parseInt(userId),
       },
     });
 

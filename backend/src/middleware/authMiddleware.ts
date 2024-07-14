@@ -1,14 +1,11 @@
-import { NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-import {
-  AuthenticatedRequest,
-  Request,
-  Response,
-} from "../types/other/ExpressTypes";
+import { AuthenticatedRequest } from "../types/AuthenticationTypes";
+import prisma from "../utils/prisma";
 import { createError } from "./handleErrors";
 
-export const authenticateToken = (
+export const verifyToken = (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -29,6 +26,42 @@ export const authenticateToken = (
     const decoded = jwt.verify(token, jwtSecret) as JwtPayload;
 
     (req as AuthenticatedRequest).payload = decoded;
+
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const checkMembership = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const payload = req.payload;
+    const groupId = req.body.groupid;
+    const { userId } = payload;
+
+    if (!userId) throw createError(401, "Token does not contain user");
+    if (!groupId) throw createError(401, "GroupId not provided");
+
+    const user = await prisma.group.findUnique({
+      where: {
+        id: groupId,
+      },
+      include: {
+        members: {
+          where: {
+            id: userId,
+          },
+        },
+      },
+    });
+
+    console.log(user);
+    console.log("testing");
+    if (!user) throw createError(401, "User is not a part of this group");
 
     next();
   } catch (error) {

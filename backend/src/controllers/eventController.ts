@@ -1,17 +1,20 @@
-import { NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 
-/* import types */
-import * as EventType from "../types/api/EventTypes";
+import { createError } from "../middleware/handleErrors";
+import { AuthenticatedRequest } from "../types/AuthenticationTypes";
 import prisma from "../utils/prisma";
 
 /* ==== CREATE ====*/
 export const createEvent = async (
-  req: EventType.CreateEventRequest,
-  res: EventType.CreateEventResponse,
+  req: AuthenticatedRequest,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
     const { title, description, groupId } = req.body;
+
+    if (!title || !description || !groupId)
+      throw createError(401, "Required properties not found");
 
     const event = await prisma.event.create({
       data: {
@@ -29,8 +32,8 @@ export const createEvent = async (
 
 // grabs event from event Id
 export const getEvent = async (
-  req: EventType.GetEventRequest,
-  res: EventType.GetEventResponse,
+  req: Request,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
@@ -38,7 +41,7 @@ export const getEvent = async (
 
     const event = await prisma.event.findUnique({
       where: {
-        id: eventId,
+        id: parseInt(eventId),
       },
     });
 
@@ -50,8 +53,8 @@ export const getEvent = async (
 
 /* ==== Update ====*/
 export const updateEvent = async (
-  req: EventType.UpdateEventRequest,
-  res: EventType.UpdateEventResponse,
+  req: Request,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
@@ -60,7 +63,7 @@ export const updateEvent = async (
 
     const updatedEvent = await prisma.event.update({
       where: {
-        id: eventId,
+        id: parseInt(eventId),
       },
       data: {
         title: title,
@@ -76,8 +79,8 @@ export const updateEvent = async (
 
 /* ==== DELETE ====*/
 export const deleteEvent = async (
-  req: EventType.DeleteEventRequest,
-  res: EventType.DeleteEventResponse,
+  req: Request,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
@@ -85,7 +88,7 @@ export const deleteEvent = async (
 
     const event = await prisma.event.delete({
       where: {
-        id: eventId,
+        id: parseInt(eventId),
       },
     });
 

@@ -5,7 +5,7 @@ import express, { Request, Response } from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 
-import { authenticateToken } from "./middleware/authMiddleware";
+import { verifyToken } from "./middleware/authMiddleware";
 import { handleErrors } from "./middleware/handleErrors";
 import EventRouter from "./routers/eventRouter";
 import UserRouter from "./routers/userRouter";
@@ -28,7 +28,7 @@ app.use(limiter);
 
 /* go to routes */
 app.use("/user", UserRouter);
-app.use("/event", authenticateToken, EventRouter);
+app.use("/event", verifyToken, EventRouter);
 
 /* frontend/other */
 app.get("/", (req: Request, res: Response) => {

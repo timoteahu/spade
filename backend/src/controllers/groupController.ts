@@ -1,6 +1,5 @@
-import { NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 
-import * as GroupType from "../types/api/GroupTypes";
 import prisma from "../utils/prisma";
 
 function generateRandomString(): string {
@@ -16,8 +15,8 @@ function generateRandomString(): string {
 
 //Create Groups
 export const createGroup = async (
-  req: GroupType.CreateGroupRequest,
-  res: GroupType.CreateGroupResponse,
+  req: Request,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
@@ -42,8 +41,8 @@ export const createGroup = async (
 
 //retrieves group by id
 export const getGroup = async (
-  req: GroupType.GetGroupRequest,
-  res: GroupType.GetGroupResponse,
+  req: Request,
+  res: Response,
   next: NextFunction,
 ) => {
   try {
@@ -51,7 +50,7 @@ export const getGroup = async (
 
     const groups = await prisma.user.findUnique({
       where: {
-        id: userId,
+        id: parseInt(userId),
       },
       include: { groups: true },
     });
