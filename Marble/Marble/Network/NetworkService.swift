@@ -12,45 +12,44 @@ import Foundation
 
 class NetworkService {
     
-    static func signIn(email: String, username: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-            guard let url = URL(string: "\(EnvConfig.baseURL)/user") else {
-                completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
+    static func signIn(email: String, username: String, password: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        guard let url = URL(string: "\(EnvConfig.baseURL)/user") else {
+            completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let body = ["email": email, "username": username, "password": password]
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
                 return
             }
 
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            let body = ["email": email, "username": username]
-            request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            guard let data = data else {
+                completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
+                return
+            }
 
-            URLSession.shared.dataTask(with: request) { data, response, error in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-
-                guard let data = data else {
-                    completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
-                    return
-                }
-
-                do {
-                    if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                       let token = json["token"] as? String {
-                        if let tokenData = token.data(using: .utf8) {
-                            KeychainHelper.standard.save(tokenData, service: "jwt", account: "userToken")
-                        }
-                        completion(.success(true))
-                    } else {
-                        completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])))
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                   let token = json["token"] as? String {
+                    if let tokenData = token.data(using: .utf8) {
+                        KeychainHelper.standard.save(tokenData, service: "jwt", account: "userToken")
                     }
-                } catch {
-                    completion(.failure(error))
+                    completion(.success(true))
+                } else {
+                    completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid response"])))
                 }
-            }.resume()
-        }
-    
+            } catch {
+                completion(.failure(error))
+            }
+        }.resume()
+    }
     
     
     static func authenticatedRequest(endpoint: String, method: String, body: [String: Any]?, completion: @escaping (Result<Data, Error>) -> Void) {

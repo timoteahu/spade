@@ -6,7 +6,7 @@ import { createError } from "../middleware/handleErrors";
 import prisma from "../utils/prisma";
 
 /* ==== CREATE ====*/
-export const signup = async (
+export const signUp = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -37,6 +37,7 @@ export const signup = async (
       },
     });
 
+    console.log(newUser);
     // Create a payload and generate a JWT token
     const payload = {
       userId: newUser.id,
@@ -47,7 +48,7 @@ export const signup = async (
     const token = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
 
     // Send the token as the response
-    res.status(201).send(token);
+    res.status(201).json({ token });
   } catch (error) {
     next(error);
   }
