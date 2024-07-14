@@ -25,7 +25,6 @@ export const createUser = async (
 };
 
 /* ==== READ ==== */
-
 export const login = async (
   req: Request,
   res: Response,
@@ -79,6 +78,8 @@ export const getUser = async (
     next(err);
   }
 };
+
+/* ==== UPDATE ==== */
 
 /* ==== DELETE ====*/
 export const deleteUser = async (
