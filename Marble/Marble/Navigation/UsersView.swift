@@ -11,6 +11,7 @@ struct UsersView: View {
     @State private var isSignedIn = false
     @State private var email = ""
     @State private var username = ""
+    @State private var password = ""
     @State private var showAlert = false
     @State private var alertMessage = ""
 
@@ -22,7 +23,6 @@ struct UsersView: View {
                         .font(.largeTitle)
                         .padding()
                     
-                    
                     Text("\(username)")
                         .font(.subheadline)
                         .padding()
@@ -30,7 +30,6 @@ struct UsersView: View {
                     Text("\(email)")
                         .font(.subheadline)
                         .padding()
-
 
                     Button(action: {
                         signOut()
@@ -54,6 +53,10 @@ struct UsersView: View {
                         .padding()
 
                     TextField("Username", text: $username)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
+                    
+                    SecureField("Password", text: $password)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
 
@@ -90,13 +93,13 @@ struct UsersView: View {
 
     func signIn() {
         // Validate inputs
-        guard !email.isEmpty, !username.isEmpty else {
+        guard !email.isEmpty, !username.isEmpty, !password.isEmpty else {
             alertMessage = "Please fill in all fields."
             showAlert = true
             return
         }
 
-        NetworkService.signIn(email: email, username: username) { result in
+        NetworkService.signIn(email: email, username: username, password: password) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:
@@ -117,6 +120,7 @@ struct UsersView: View {
         isSignedIn = false
         email = ""
         username = ""
+        password = ""
         showAlert = false
         alertMessage = ""
 
