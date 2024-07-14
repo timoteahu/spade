@@ -52,7 +52,7 @@ export const login = async (
     /* checks for undefined secret key*/
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) throw createError(501, "jwt key not set");
-    const token = jwt.sign(payload, jwtSecret);
+    const token = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
 
     res.status(200).send(token);
   } catch (error) {
