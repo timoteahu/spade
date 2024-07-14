@@ -51,7 +51,7 @@ export const checkMembership = async (
 
     const user = await prisma.group.findUnique({
       where: {
-        id: groupId,
+        id: parseInt(groupId),
       },
       include: {
         members: {
