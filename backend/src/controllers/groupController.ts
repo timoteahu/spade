@@ -1,5 +1,7 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 
+import { createError } from "../middleware/handleErrors";
+import { AuthenticatedRequest } from "../types/AuthenticationTypes";
 import prisma from "../utils/prisma";
 
 function generateRandomString(): string {
@@ -15,12 +17,16 @@ function generateRandomString(): string {
 
 //Create Groups
 export const createGroup = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const { name, userid } = req.body;
+    const { name, userId } = req.body;
+
+    if (!name || !userId)
+      throw createError(400, "Required argument not provided");
+
     const join_code = generateRandomString(); //makes a random 9 digit join code
 
     const group = await prisma.group.create({
@@ -28,7 +34,7 @@ export const createGroup = async (
         name: name,
         join_code: join_code,
         members: {
-          connect: { id: userid }, //adds current user into the group by default
+          connect: { id: userId }, //adds current user into the group by default
         },
       },
     });
@@ -41,7 +47,7 @@ export const createGroup = async (
 
 //retrieves group by id
 export const getGroup = async (
-  req: Request,
+  req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
