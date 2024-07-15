@@ -1,6 +1,7 @@
 {
   "scripts": {
     "build": "yarn install && yarn prisma generate && yarn migrate && npx tsc",
+    "test": "yarn jest --runInBand",
     "start": "node -r dotenv/config dist/index.js",
     "dev": "nodemon -r dotenv/config src/server.ts",
     "migrate": "yarn prisma migrate deploy"
