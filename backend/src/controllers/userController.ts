@@ -46,6 +46,7 @@ export const signUp = async (
 
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) throw createError(501, "JWT key not set");
+
     const token = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
 
     // Send the token as the response
