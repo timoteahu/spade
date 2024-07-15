@@ -18,7 +18,7 @@ const inputUserData = {
   token: "",
 };
 
-const userGroupIds = [0];
+const userGroupId = 4;
 
 const header = {
   authorization: "",
@@ -60,7 +60,7 @@ const createUserBody = {
   password: inputUserData.password,
 };
 describe("test-create", () => {
-  test("Regular Account Creation", (done) => {
+  test("creating account", (done) => {
     request(app)
       .post("/user/")
       .send(createUserBody)
@@ -70,7 +70,7 @@ describe("test-create", () => {
         done();
       });
   });
-  test("Existing Data", (done) => {
+  test("creating with existing data", (done) => {
     request(app)
       .post("/user/")
       .send(createUserBody)
@@ -85,7 +85,7 @@ const loginUserBody = {
   email: inputUserData.email,
 };
 describe("test-login", () => {
-  test("It should respond 200, and a token", (done) => {
+  test("testing login", (done) => {
     request(app)
       .post("/user/login")
       .send(loginUserBody)
@@ -113,10 +113,28 @@ describe("token/id-tests", () => {
     test("testing join", (done) => {
       request(app)
         .post("/user/join")
-        .send({ groupId: 4 })
+        .send({ groupId: userGroupId })
         .set(header)
         .then((response) => {
           expect(response.statusCode).toBe(200);
+          done();
+        });
+    });
+  });
+
+  describe("test-leave", () => {
+    test("testing leave", (done) => {
+      request(app)
+        .post("/user/leave")
+        .send({ groupId: userGroupId })
+        .set(header)
+        .then((response) => {
+          try {
+            expect(response.statusCode).toBe(200);
+          } catch (error) {
+            console.log(response.body);
+            done(error);
+          }
           done();
         });
     });
