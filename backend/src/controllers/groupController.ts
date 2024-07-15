@@ -22,7 +22,8 @@ export const createGroup = async (
   next: NextFunction,
 ) => {
   try {
-    const { name, userId } = req.body;
+    const { name } = req.body;
+    const userId = req?.payload?.userId;
 
     if (!name || !userId)
       throw createError(400, "Required argument not provided");
@@ -46,23 +47,23 @@ export const createGroup = async (
 };
 
 //retrieves group by id
-export const getGroup = async (
-  req: AuthenticatedRequest,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const { userId } = req.params;
+// export const getGroup = async (
+//   req: AuthenticatedRequest,
+//   res: Response,
+//   next: NextFunction,
+// ) => {
+//   try {
+//     const { userId } = req.params;
 
-    const groups = await prisma.user.findUnique({
-      where: {
-        id: parseInt(userId),
-      },
-      include: { groups: true },
-    });
+//     const groups = await prisma.user.findUnique({
+//       where: {
+//         id: parseInt(userId),
+//       },
+//       include: { groups: true },
+//     });
 
-    res.status(200).send(groups);
-  } catch (error) {
-    next(error);
-  }
-};
+//     res.status(200).send(groups);
+//   } catch (error) {
+//     next(error);
+//   }
+// };

@@ -89,25 +89,25 @@ export const login = async (
   }
 };
 
-export const getUser = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  try {
-    const { userId } = req.params;
+// export const getUser = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction,
+// ) => {
+//   try {
+//     const { userId } = req.params;
 
-    const user = await prisma.user.findUnique({
-      where: {
-        id: parseInt(userId),
-      },
-    });
+//     const user = await prisma.user.findUnique({
+//       where: {
+//         id: parseInt(userId),
+//       },
+//     });
 
-    res.status(200).send(user ? user : {});
-  } catch (error) {
-    next(error);
-  }
-};
+//     res.status(200).send(user ? user : {});
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 
 /* ==== UPDATE ==== */
 export const joinGroup = async (
@@ -131,7 +131,11 @@ export const joinGroup = async (
         },
       },
     });
-    res.status(200).send(updatedGroup);
+    const returnBody = {
+      groupId: updatedGroup.id,
+    };
+
+    res.status(200).json(returnBody).send();
   } catch (error) {
     next(error);
   }
@@ -159,7 +163,11 @@ export const leaveGroup = async (
       },
     });
 
-    res.status(200).send(updatedGroup);
+    const returnBody = {
+      groupId: updatedGroup.id,
+    };
+
+    res.status(200).json(returnBody).send();
   } catch (error) {
     next(error);
   }
@@ -180,7 +188,11 @@ export const deleteUser = async (
       },
     });
 
-    res.status(200).send(user);
+    const returnBody = {
+      userId: user.id,
+      email: user.email,
+    };
+    res.status(200).json(returnBody).send();
   } catch (err) {
     next();
   }
