@@ -39,7 +39,6 @@ export const createGroup = async (
         },
       },
     });
-    console.log(group);
     return res.status(201).send(group);
   } catch (error) {
     next(error);
@@ -68,7 +67,6 @@ export const getGroups = async (
     if (!userWithGroups) throw createError(404, "User not found");
 
     res.status(200).json(userWithGroups.groups);
-    console.log(userWithGroups);
   } catch (error) {
     next(error);
   }

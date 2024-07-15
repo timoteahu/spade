@@ -11,7 +11,6 @@ export const verifyToken = (
   next: NextFunction,
 ) => {
   try {
-    console.log("START");
     /* split grab the token from the authorization header */
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
@@ -28,7 +27,6 @@ export const verifyToken = (
 
     (req as AuthenticatedRequest).payload = decoded;
 
-    console.log("COMPLETED");
     next();
   } catch (error) {
     next(error);
@@ -66,7 +64,6 @@ export const checkMembership = async (
     });
 
     if (!group || group.members.length == 0) {
-      console.log(group?.members);
       throw createError(401, "User is not a part of this group");
     }
 
