@@ -86,6 +86,7 @@ class NetworkService {
             }
         }.resume()
     }
+    
     static func authenticatedRequest(endpoint: String, method: String, body: [String: Any]?, completion: @escaping (Result<Data, Error>) -> Void) {
         guard let url = URL(string: "\(EnvConfig.baseURL)/\(endpoint)") else {
             completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
@@ -94,7 +95,7 @@ class NetworkService {
 
         var request = URLRequest(url: url)
         request.httpMethod = method
-        if let body = body {
+        if let body = body, method != "GET" { // Only set the body if it's not a GET request
             request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
         }
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -121,6 +122,6 @@ class NetworkService {
             completion(.success(data))
         }.resume()
     }
-
-    
 }
+    
+

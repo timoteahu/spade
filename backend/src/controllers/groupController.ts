@@ -34,11 +34,11 @@ export const createGroup = async (
         name: name,
         join_code: join_code,
         members: {
-          connect: { id: userId }, //adds current user into the group by default
+          connect: { id: parseInt(userId) }, //adds current user into the group by default
         },
       },
     });
-
+    console.log(group);
     return res.status(201).send(group);
   } catch (error) {
     next(error);
@@ -46,22 +46,28 @@ export const createGroup = async (
 };
 
 //retrieves group by id
-export const getGroup = async (
+export const getGroups = async (
   req: AuthenticatedRequest,
   res: Response,
   next: NextFunction,
 ) => {
   try {
+    console.log("CALLING");
     const { userId } = req.params;
 
-    const groups = await prisma.user.findUnique({
+    if (!userId) throw createError(400, "User ID is required");
+
+    const userWithGroups = await prisma.user.findUnique({
       where: {
         id: parseInt(userId),
       },
       include: { groups: true },
     });
 
-    res.status(200).send(groups);
+    if (!userWithGroups) throw createError(404, "User not found");
+
+    console.log(userWithGroups.groups);
+    res.status(200).json(userWithGroups.groups);
   } catch (error) {
     next(error);
   }
