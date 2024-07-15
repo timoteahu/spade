@@ -12,7 +12,6 @@ import GroupRouter from "./routers/groupRouter";
 import UserRouter from "./routers/userRouter";
 /* setup express */
 const app = express();
-const port = 3000;
 dotenv.config();
 
 /* request middleware */
@@ -28,7 +27,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 /* go to routes */
-app.use("/user", verifyToken, UserRouter);
+app.use("/user", UserRouter);
 app.use("/event", verifyToken, EventRouter);
 app.use("/group", verifyToken, GroupRouter);
 
@@ -40,9 +39,6 @@ app.get("/", (req: Request, res: Response) => {
 /* response middleware */
 app.use(handleErrors);
 /* begin listening */
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
 
 // /* authentication middleware */
 // app.use(
