@@ -21,6 +21,7 @@
 		30A8A4AE2C3F2D0E0079462E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4AD2C3F2D0E0079462E /* NetworkService.swift */; };
 		30A8A4B42C3FAE0E0079462E /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4B32C3FAE0E0079462E /* SplashScreenView.swift */; };
 		30A8A4B62C407E530079462E /* KeyChainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4B52C407E530079462E /* KeyChainHelper.swift */; };
+		30F85B302C44D47B0036F8AC /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 30F85B2F2C44D47B0036F8AC /* JWTDecode */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30F85B302C44D47B0036F8AC /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +216,9 @@
 			dependencies = (
 			);
 			name = Marble;
+			packageProductDependencies = (
+				30F85B2F2C44D47B0036F8AC /* JWTDecode */,
+			);
 			productName = Marble;
 			productReference = 30172AB72C368E77000CAD04 /* Marble.app */;
 			productType = "com.apple.product-type.application";
@@ -286,6 +291,9 @@
 				Base,
 			);
 			mainGroup = 30172AAE2C368E77000CAD04;
+			packageReferences = (
+				30F85B2E2C44D47B0036F8AC /* XCRemoteSwiftPackageReference "JWTDecode" */,
+			);
 			productRefGroup = 30172AB82C368E77000CAD04 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -668,6 +676,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		30F85B2E2C44D47B0036F8AC /* XCRemoteSwiftPackageReference "JWTDecode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		30F85B2F2C44D47B0036F8AC /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30F85B2E2C44D47B0036F8AC /* XCRemoteSwiftPackageReference "JWTDecode" */;
+			productName = JWTDecode;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 30172AAF2C368E77000CAD04 /* Project object */;
 }

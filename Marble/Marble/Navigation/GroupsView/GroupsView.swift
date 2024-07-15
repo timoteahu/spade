@@ -29,16 +29,45 @@ struct GroupsView: View {
     
     var body: some View {
         NavigationView {
-            List(groups) { group in
-                VStack(alignment: .leading) {
-                    Text(group.name)
-                        .font(.headline)
-                    Text(group.description)
-                        .font(.subheadline)
+            VStack {
+                Spacer()
+                Text("Your Groups")
+                    .font(.largeTitle)
+                    .padding(.top)
+                
+                Spacer()
+                
+                HStack {
+                    Button(action: {
+                        // Action for creating a group
+                    }) {
+                        Text("Create a Group")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                    }
+                    
+                    Button(action: {
+                        // Action for joining a group
+                    }) {
+                        Text("Join a Group")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.green)
+                            .cornerRadius(8)
+                    }
                 }
-                .padding(.vertical, 5)
+                .padding(.horizontal)
+                .padding(.top, 10)
+                
+                Spacer()
+                
             }
-            .navigationTitle("Groups")
         }
     }
 }
