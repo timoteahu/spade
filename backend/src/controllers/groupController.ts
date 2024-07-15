@@ -61,13 +61,13 @@ export const getGroups = async (
       where: {
         id: parseInt(userId),
       },
-      include: { groups: true },
+      include: { groups: { include: { members: true, events: true } } },
     });
 
     if (!userWithGroups) throw createError(404, "User not found");
 
-    console.log(userWithGroups.groups);
     res.status(200).json(userWithGroups.groups);
+    console.log(userWithGroups);
   } catch (error) {
     next(error);
   }

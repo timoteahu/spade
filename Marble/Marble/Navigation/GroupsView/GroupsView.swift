@@ -11,6 +11,19 @@ struct Group: Identifiable, Codable {
     var id: Int
     var name: String
     var join_code: String
+    var events: [Events]?
+    var members: [Member]
+}
+
+struct Member: Identifiable, Codable {
+    var id: Int
+    var username: String
+}
+
+struct Events: Identifiable, Codable {
+    var id: Int
+    var title: String
+    var description: String
 }
 
 struct GroupsView: View {
@@ -31,10 +44,14 @@ struct GroupsView: View {
                 } else {
                     List(groups) { group in
                         VStack(alignment: .leading) {
-                            Text(group.name)
-                                .font(.headline)
-                            Text("Join Code: \(group.join_code)")
-                                .font(.subheadline)
+                            NavigationLink(destination: group_view_indiv(group: group)){
+                                Text(group.name)
+                                    .font(.headline)
+                                    .padding(.vertical, 5)
+                                Text("Join Code: \(group.join_code)")
+                                    .font(.subheadline)
+                                
+                            }
                         }
                         .padding(.vertical, 5)
                     }
@@ -84,21 +101,26 @@ struct GroupsView: View {
             showAlert = true
             return
         }
-
+        print("test")
         NetworkService.authenticatedRequest(endpoint: "group/\(userId)", method: "GET", body: nil) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
                     do {
+                        print("hi")
                         // Print the raw data as a string
                         // Inspect the JSON structure
                         let json = try JSONSerialization.jsonObject(with: data, options: [])
+                        
+                        print(json)
+                        
 
                         // Attempt to decode the data
                         let decodedGroups = try JSONDecoder().decode([Group].self, from: data)
                         self.groups = decodedGroups
                         self.isLoading = false
                     } catch {
+                        print(error)
                         alertMessage = "Failed to decode response: \(error.localizedDescription)"
                         showAlert = true
                         self.isLoading = false

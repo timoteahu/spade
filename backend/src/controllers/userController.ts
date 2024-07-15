@@ -43,7 +43,6 @@ export const signUp = async (
     const payload = {
       userId: newUser.id,
     };
-
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) throw createError(501, "JWT key not set");
 
