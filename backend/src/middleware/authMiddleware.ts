@@ -50,7 +50,7 @@ export const checkMembership = async (
 
     const groupId = !groupIdBody ? groupIdParam : groupIdBody;
 
-    const user = await prisma.group.findUnique({
+    const group = await prisma.group.findUnique({
       where: {
         id: parseInt(groupId),
       },
@@ -63,8 +63,10 @@ export const checkMembership = async (
       },
     });
 
-    if (!user || user.members.length == 0)
+    if (!group || group.members.length == 0) {
+      console.log(group?.members);
       throw createError(401, "User is not a part of this group");
+    }
 
     next();
   } catch (error) {

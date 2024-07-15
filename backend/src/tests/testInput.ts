@@ -18,6 +18,7 @@ export const inputGroupData = {
   id: 0,
   name: "group1",
   joinCode: 0,
+  eventId: 0,
 };
 
 /* ================================================== */

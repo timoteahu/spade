@@ -13,11 +13,15 @@ import {
 } from "./testInput";
 
 beforeAll(async () => {
-  await prisma.user.delete({
-    where: {
-      username: inputUserData.username,
-    },
-  });
+  try {
+    await prisma.user.delete({
+      where: {
+        username: inputUserData.username,
+      },
+    });
+  } catch (error) {
+    console.log("no users to delete");
+  }
 });
 
 describe("Test the root path", () => {
@@ -72,14 +76,18 @@ describe("token/id-tests", () => {
         .send(createGroupBody)
         .set(inputUserData.headers)
         .then((response) => {
-          expect(response.body).toHaveProperty("join_code");
-          expect(response.body).toHaveProperty("name", inputGroupData.name);
-          expect(response.body).toHaveProperty("id");
-          expect(response.statusCode).toBe(201);
+          try {
+            expect(response.body).toHaveProperty("join_code");
+            expect(response.body).toHaveProperty("name", inputGroupData.name);
+            expect(response.body).toHaveProperty("id");
+            expect(response.statusCode).toBe(201);
 
-          // set id to test
-          inputGroupData.id = response.body.id;
-          done();
+            // set id to test
+            inputGroupData.id = response.body.id;
+            done();
+          } catch (error) {
+            done(error);
+          }
         });
     });
   });
@@ -94,9 +102,13 @@ describe("token/id-tests", () => {
         .post("/user/login")
         .send(loginUserBody)
         .then((response) => {
-          expect(response.headers).toHaveProperty("authorization");
-          expect(response.statusCode).toBe(200);
-          done();
+          try {
+            expect(response.headers).toHaveProperty("authorization");
+            expect(response.statusCode).toBe(200);
+            done();
+          } catch (error) {
+            done(error);
+          }
         });
     });
   });
@@ -111,30 +123,11 @@ describe("token/id-tests", () => {
         .send({ groupId: inputGroupData.id })
         .set(inputUserData.headers)
         .then((response) => {
-          expect(response.body).toStrictEqual({
-            groupId: inputGroupData.id,
-          });
-          expect(response.statusCode).toBe(200);
-          done();
-        });
-    });
-  });
-  /* ----test join----  */
-  /* tests:             */
-  /* - status code      */
-  /* - return Body      */
-  describe("test-leave", () => {
-    test("testing leave", (done) => {
-      request(app)
-        .post("/user/leave")
-        .set(inputUserData.headers)
-        .send({ groupId: inputUserData.userGroupId })
-        .then((response) => {
           try {
-            expect(response.statusCode).toBe(200);
             expect(response.body).toStrictEqual({
-              groupId: inputUserData.userGroupId,
+              groupId: inputGroupData.id,
             });
+            expect(response.statusCode).toBe(200);
             done();
           } catch (error) {
             done(error);
@@ -149,25 +142,83 @@ describe("token/id-tests", () => {
   /* - return Body               */
   describe("test-events", () => {
     describe("test-create", () => {
-      test("test-create", (done) => {
+      test("creating event", (done) => {
         request(app)
           .post(`/event/${inputGroupData.id}`)
           .send(createEventBody)
           .set(inputUserData.headers)
           .then((response) => {
-            console.log(response.body);
-            expect(response.statusCode).toBe(201);
-            done();
+            try {
+              inputGroupData.eventId = response.body.id;
+              expect(response.statusCode).toBe(201);
+              done();
+            } catch (error) {
+              console.log(response.body);
+              done(error);
+            }
           });
       });
+    });
+
+    describe("test-delete", () => {
+      test("deleting event", (done) => {
+        request(app)
+          .delete(`/event/${inputGroupData.id}/${inputGroupData.eventId}`)
+          .send(createEventBody)
+          .set(inputUserData.headers)
+          .then((response) => {
+            try {
+              expect(response.statusCode).toBe(200);
+              done();
+            } catch (error) {
+              console.log(response.body);
+              done(error);
+            }
+          });
+      });
+    });
+  });
+
+  /* tests:             */
+  /* - status code      */
+  /* - return Body      */
+  describe("test-leave", () => {
+    test("testing leave", (done) => {
+      request(app)
+        .post("/user/leave")
+        .set(inputUserData.headers)
+        .send({ groupId: inputGroupData.id })
+        .then((response) => {
+          try {
+            expect(response.statusCode).toBe(200);
+            expect(response.body).toStrictEqual({
+              groupId: inputGroupData.id,
+            });
+            done();
+          } catch (error) {
+            console.log(response.body);
+            done(error);
+          }
+        });
     });
   });
 });
 
 afterAll(async () => {
-  await prisma.group.deleteMany({
-    where: {
-      name: inputGroupData.name,
-    },
-  });
+  console.log("deleting created objects ");
+  try {
+    await prisma.event.deleteMany({
+      where: {
+        groupId: inputGroupData.id,
+      },
+    });
+
+    await prisma.group.deleteMany({
+      where: {
+        name: inputGroupData.name,
+      },
+    });
+  } catch (error) {
+    console.log("no groups to delete");
+  }
 });
