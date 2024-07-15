@@ -35,11 +35,11 @@ export const createGroup = async (
         name: name,
         join_code: join_code,
         members: {
-          connect: { id: userId }, //adds current user into the group by default
+          connect: { id: parseInt(userId) }, //adds current user into the group by default
         },
       },
     });
-
+    console.log(group);
     return res.status(201).send(group);
   } catch (error) {
     next(error);
@@ -47,23 +47,29 @@ export const createGroup = async (
 };
 
 //retrieves group by id
-// export const getGroup = async (
-//   req: AuthenticatedRequest,
-//   res: Response,
-//   next: NextFunction,
-// ) => {
-//   try {
-//     const { userId } = req.params;
+export const getGroups = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    console.log("CALLING");
+    const { userId } = req.params;
 
-//     const groups = await prisma.user.findUnique({
-//       where: {
-//         id: parseInt(userId),
-//       },
-//       include: { groups: true },
-//     });
+    if (!userId) throw createError(400, "User ID is required");
 
-//     res.status(200).send(groups);
-//   } catch (error) {
-//     next(error);
-//   }
-// };
+    const userWithGroups = await prisma.user.findUnique({
+      where: {
+        id: parseInt(userId),
+      },
+      include: { groups: { include: { members: true, events: true } } },
+    });
+
+    if (!userWithGroups) throw createError(404, "User not found");
+
+    res.status(200).json(userWithGroups.groups);
+    console.log(userWithGroups);
+  } catch (error) {
+    next(error);
+  }
+};

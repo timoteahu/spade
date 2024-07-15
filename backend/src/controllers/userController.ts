@@ -18,6 +18,7 @@ export const signUp = async (
     if (!email || !username || !password)
       throw createError(400, "Email, username, and password are required");
 
+    console.log("HI");
     // Check if the user already exists
     const existingUser = await prisma.user.findUnique({
       where: {
@@ -42,14 +43,15 @@ export const signUp = async (
     const payload = {
       userId: newUser.id,
     };
-
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) throw createError(501, "JWT key not set");
 
     const token = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
 
     // Send the token as the response
-    res.status(201).set("Authorization", `Bearer ${token}`).send();
+
+    res.status(201).set("Authorization", `Bearer ${token}`).send({ token });
+
   } catch (error) {
     next(error);
   }

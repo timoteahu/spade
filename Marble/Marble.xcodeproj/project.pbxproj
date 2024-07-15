@@ -21,6 +21,9 @@
 		30A8A4AE2C3F2D0E0079462E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4AD2C3F2D0E0079462E /* NetworkService.swift */; };
 		30A8A4B42C3FAE0E0079462E /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4B32C3FAE0E0079462E /* SplashScreenView.swift */; };
 		30A8A4B62C407E530079462E /* KeyChainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4B52C407E530079462E /* KeyChainHelper.swift */; };
+		30F85B302C44D47B0036F8AC /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 30F85B2F2C44D47B0036F8AC /* JWTDecode */; };
+		30F85B322C44EDE50036F8AC /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F85B312C44EDE50036F8AC /* CreateGroupView.swift */; };
+		3B1A9B152C4500B000C130DF /* group_view_indiv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1A9B142C4500B000C130DF /* group_view_indiv.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +62,8 @@
 		30A8A4AF2C3F326B0079462E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30A8A4B32C3FAE0E0079462E /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		30A8A4B52C407E530079462E /* KeyChainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainHelper.swift; sourceTree = "<group>"; };
+		30F85B312C44EDE50036F8AC /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
+		3B1A9B142C4500B000C130DF /* group_view_indiv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = group_view_indiv.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				30F85B302C44D47B0036F8AC /* JWTDecode in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +200,8 @@
 			isa = PBXGroup;
 			children = (
 				30A8A4A02C3F12BB0079462E /* GroupsView.swift */,
+				30F85B312C44EDE50036F8AC /* CreateGroupView.swift */,
+				3B1A9B142C4500B000C130DF /* group_view_indiv.swift */,
 			);
 			path = GroupsView;
 			sourceTree = "<group>";
@@ -214,6 +222,9 @@
 			dependencies = (
 			);
 			name = Marble;
+			packageProductDependencies = (
+				30F85B2F2C44D47B0036F8AC /* JWTDecode */,
+			);
 			productName = Marble;
 			productReference = 30172AB72C368E77000CAD04 /* Marble.app */;
 			productType = "com.apple.product-type.application";
@@ -286,6 +297,9 @@
 				Base,
 			);
 			mainGroup = 30172AAE2C368E77000CAD04;
+			packageReferences = (
+				30F85B2E2C44D47B0036F8AC /* XCRemoteSwiftPackageReference "JWTDecode" */,
+			);
 			productRefGroup = 30172AB82C368E77000CAD04 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -330,7 +344,9 @@
 			files = (
 				30A8A4B62C407E530079462E /* KeyChainHelper.swift in Sources */,
 				30172ABD2C368E77000CAD04 /* ContentView.swift in Sources */,
+				30F85B322C44EDE50036F8AC /* CreateGroupView.swift in Sources */,
 				30A8A4A72C3F2BBD0079462E /* EnvConfig.swift in Sources */,
+				3B1A9B152C4500B000C130DF /* group_view_indiv.swift in Sources */,
 				30A8A4A32C3F12DE0079462E /* EventsView.swift in Sources */,
 				30172ABB2C368E77000CAD04 /* MarbleApp.swift in Sources */,
 				30A8A4A12C3F12BB0079462E /* GroupsView.swift in Sources */,
@@ -668,6 +684,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		30F85B2E2C44D47B0036F8AC /* XCRemoteSwiftPackageReference "JWTDecode" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		30F85B2F2C44D47B0036F8AC /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 30F85B2E2C44D47B0036F8AC /* XCRemoteSwiftPackageReference "JWTDecode" */;
+			productName = JWTDecode;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 30172AAF2C368E77000CAD04 /* Project object */;
 }
