@@ -1,7 +1,6 @@
 import express from "express";
 
 import * as groups from "../controllers/groupController";
-import { checkMembership } from "../middleware/authMiddleware";
 
 const router = express.Router();
 

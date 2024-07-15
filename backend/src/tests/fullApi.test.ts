@@ -3,6 +3,7 @@ import request from "supertest";
 import app from "../app";
 import prisma from "../utils/prisma";
 import {
+  createEventBody,
   createGroupBody,
   createUserBody,
   getToken,
@@ -75,6 +76,9 @@ describe("token/id-tests", () => {
           expect(response.body).toHaveProperty("name", inputGroupData.name);
           expect(response.body).toHaveProperty("id");
           expect(response.statusCode).toBe(201);
+
+          // set id to test
+          inputGroupData.id = response.body.id;
           done();
         });
     });
@@ -104,11 +108,11 @@ describe("token/id-tests", () => {
     test("testing join", (done) => {
       request(app)
         .post("/user/join")
-        .send({ groupId: inputUserData.userGroupId })
+        .send({ groupId: inputGroupData.id })
         .set(inputUserData.headers)
         .then((response) => {
           expect(response.body).toStrictEqual({
-            groupId: inputUserData.userGroupId,
+            groupId: inputGroupData.id,
           });
           expect(response.statusCode).toBe(200);
           done();
@@ -123,8 +127,8 @@ describe("token/id-tests", () => {
     test("testing leave", (done) => {
       request(app)
         .post("/user/leave")
-        .send({ groupId: inputUserData.userGroupId })
         .set(inputUserData.headers)
+        .send({ groupId: inputUserData.userGroupId })
         .then((response) => {
           try {
             expect(response.statusCode).toBe(200);
@@ -136,6 +140,26 @@ describe("token/id-tests", () => {
             done(error);
           }
         });
+    });
+  });
+
+  /* ----test create-event ----  */
+  /* tests:                      */
+  /* - status code               */
+  /* - return Body               */
+  describe("test-events", () => {
+    describe("test-create", () => {
+      test("test-create", (done) => {
+        request(app)
+          .post(`/event/${inputGroupData.id}`)
+          .send(createEventBody)
+          .set(inputUserData.headers)
+          .then((response) => {
+            console.log(response.body);
+            expect(response.statusCode).toBe(201);
+            done();
+          });
+      });
     });
   });
 });

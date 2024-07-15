@@ -15,6 +15,7 @@ export const inputUserData = {
 };
 
 export const inputGroupData = {
+  id: 0,
   name: "group1",
   joinCode: 0,
 };
@@ -32,6 +33,12 @@ export const loginUserBody = {
 
 export const createGroupBody = {
   name: inputGroupData.name,
+};
+
+export const createEventBody = {
+  title: "Event 1",
+  description: "Event description...",
+  groupId: inputGroupData.id,
 };
 
 type tokenPayload = {
