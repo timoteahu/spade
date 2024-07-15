@@ -10,7 +10,7 @@
     "project": "./tsconfig.json",
     "sourceType": "module"
   },
-  "ignorePatterns": ["dist"],
+  "ignorePatterns": ["dist", "*.js"],
   "rules": {
     "prettier/prettier": ["error", {}, { "usePrettierrc": true }],
     "import/first": "error",
