@@ -50,7 +50,7 @@ export const signUp = async (
     const token = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
 
     // Send the token as the response
-    res.status(200).set("Authorization", `Bearer ${token}`).send();
+    res.status(200).set("Authorization", `Bearer ${token}`).send({ token });
   } catch (error) {
     next(error);
   }
