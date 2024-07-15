@@ -38,7 +38,6 @@ export const signUp = async (
       },
     });
 
-    console.log(newUser);
     // Create a payload and generate a JWT token
     const payload = {
       userId: newUser.id,
