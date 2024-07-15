@@ -12,7 +12,6 @@ import GroupRouter from "./routers/groupRouter";
 import UserRouter from "./routers/userRouter";
 /* setup express */
 const app = express();
-const port = 3000;
 dotenv.config();
 
 /* request middleware */
@@ -40,9 +39,6 @@ app.get("/", (req: Request, res: Response) => {
 /* response middleware */
 app.use(handleErrors);
 /* begin listening */
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
 
 // /* authentication middleware */
 // app.use(
