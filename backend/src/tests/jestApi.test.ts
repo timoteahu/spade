@@ -20,15 +20,48 @@ const createUserBody = {
   email: "testemail@gmail.com",
   password: "verysecure101",
 };
+
 /* test create account */
-describe("Test Account Creation", () => {
+describe("test-create", () => {
   test("It should response 201, and a token", (done) => {
     request(app)
       .post("/user/")
       .send(createUserBody)
       .then((response) => {
-        console.log(response.body);
+        console.log(response.headers["authorization"]);
         expect(response.statusCode).toBe(201);
+        done();
+      });
+  });
+});
+
+const loginUserBody = {
+  email: "testemail@gmail.com",
+};
+
+/* test login */
+describe("test-login", () => {
+  test("It should reslonse 200, and a token", (done) => {
+    request(app)
+      .post("/user/login")
+      .send(loginUserBody)
+      .then((response) => {
+        console.log(response.headers["authorization"]);
+        expect(response.statusCode).toBe(200);
+        done();
+      });
+  });
+});
+
+/* test get account */
+describe("test-login", () => {
+  test("It should reslonse 200, and a token", (done) => {
+    request(app)
+      .post("/user/login")
+      .send(loginUserBody)
+      .then((response) => {
+        console.log(response.headers["authorization"]);
+        expect(response.statusCode).toBe(200);
         done();
       });
   });

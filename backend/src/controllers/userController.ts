@@ -49,7 +49,7 @@ export const signUp = async (
     const token = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
 
     // Send the token as the response
-    res.status(201).json({ token });
+    res.status(200).set("Authorization", `Bearer ${token}`).send();
   } catch (error) {
     next(error);
   }
@@ -78,13 +78,13 @@ export const login = async (
     const payload = {
       userId: user.id,
     };
-
     /* checks for undefined secret key*/
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) throw createError(501, "jwt key not set");
     const token = jwt.sign(payload, jwtSecret, { expiresIn: "1h" });
 
-    res.status(200).send(token);
+    console.log(token);
+    res.status(200).set("Authorization", `Bearer ${token}`).send();
   } catch (error) {
     next(error);
   }
