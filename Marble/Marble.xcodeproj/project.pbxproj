@@ -23,7 +23,7 @@
 		30A8A4B62C407E530079462E /* KeyChainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30A8A4B52C407E530079462E /* KeyChainHelper.swift */; };
 		30F85B302C44D47B0036F8AC /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 30F85B2F2C44D47B0036F8AC /* JWTDecode */; };
 		30F85B322C44EDE50036F8AC /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F85B312C44EDE50036F8AC /* CreateGroupView.swift */; };
-		3B1A9B152C4500B000C130DF /* group_view_indiv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1A9B142C4500B000C130DF /* group_view_indiv.swift */; };
+		3B1A9B152C4500B000C130DF /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1A9B142C4500B000C130DF /* GroupDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +63,7 @@
 		30A8A4B32C3FAE0E0079462E /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		30A8A4B52C407E530079462E /* KeyChainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainHelper.swift; sourceTree = "<group>"; };
 		30F85B312C44EDE50036F8AC /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
-		3B1A9B142C4500B000C130DF /* group_view_indiv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = group_view_indiv.swift; sourceTree = "<group>"; };
+		3B1A9B142C4500B000C130DF /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -201,7 +201,7 @@
 			children = (
 				30A8A4A02C3F12BB0079462E /* GroupsView.swift */,
 				30F85B312C44EDE50036F8AC /* CreateGroupView.swift */,
-				3B1A9B142C4500B000C130DF /* group_view_indiv.swift */,
+				3B1A9B142C4500B000C130DF /* GroupDetailView.swift */,
 			);
 			path = GroupsView;
 			sourceTree = "<group>";
@@ -346,7 +346,7 @@
 				30172ABD2C368E77000CAD04 /* ContentView.swift in Sources */,
 				30F85B322C44EDE50036F8AC /* CreateGroupView.swift in Sources */,
 				30A8A4A72C3F2BBD0079462E /* EnvConfig.swift in Sources */,
-				3B1A9B152C4500B000C130DF /* group_view_indiv.swift in Sources */,
+				3B1A9B152C4500B000C130DF /* GroupDetailView.swift in Sources */,
 				30A8A4A32C3F12DE0079462E /* EventsView.swift in Sources */,
 				30172ABB2C368E77000CAD04 /* MarbleApp.swift in Sources */,
 				30A8A4A12C3F12BB0079462E /* GroupsView.swift in Sources */,
