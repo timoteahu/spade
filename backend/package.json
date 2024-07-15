@@ -2,7 +2,7 @@
   "scripts": {
     "build": "yarn install && yarn prisma generate && yarn migrate && npx tsc",
     "start": "node -r dotenv/config dist/index.js",
-    "dev": "nodemon -r dotenv/config src/index.ts",
+    "dev": "nodemon -r dotenv/config src/server.ts",
     "migrate": "yarn prisma migrate deploy"
   },
   "name": "marble",
