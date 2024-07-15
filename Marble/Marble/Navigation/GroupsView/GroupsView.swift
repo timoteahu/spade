@@ -15,12 +15,12 @@ struct Group: Identifiable, Codable {
     var members: [Member]
 }
 
-struct Member: Identifiable, Codable {
+struct Member: Hashable, Identifiable, Codable {
     var id: Int
     var username: String
 }
 
-struct Events: Identifiable, Codable {
+struct Events: Hashable, Identifiable, Codable {
     var id: Int
     var title: String
     var description: String
@@ -44,7 +44,7 @@ struct GroupsView: View {
                 } else {
                     List(groups) { group in
                         VStack(alignment: .leading) {
-                            NavigationLink(destination: group_view_indiv(group: group)){
+                            NavigationLink(destination: GroupDetailView(groupId: group.id)){
                                 Text(group.name)
                                     .font(.headline)
                                     .padding(.vertical, 5)
@@ -101,20 +101,16 @@ struct GroupsView: View {
             showAlert = true
             return
         }
-        print("test")
         NetworkService.authenticatedRequest(endpoint: "group/\(userId)", method: "GET", body: nil) { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
                     do {
-                        print("hi")
                         // Print the raw data as a string
                         // Inspect the JSON structure
                         let json = try JSONSerialization.jsonObject(with: data, options: [])
                         
                         print(json)
-                        
-
                         // Attempt to decode the data
                         let decodedGroups = try JSONDecoder().decode([Group].self, from: data)
                         self.groups = decodedGroups

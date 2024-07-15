@@ -52,7 +52,6 @@ export const getGroups = async (
   next: NextFunction,
 ) => {
   try {
-    console.log("CALLING");
     const { userId } = req.params;
 
     if (!userId) throw createError(400, "User ID is required");
@@ -67,6 +66,31 @@ export const getGroups = async (
     if (!userWithGroups) throw createError(404, "User not found");
 
     res.status(200).json(userWithGroups.groups);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getGroupById = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { groupId } = req.params;
+
+    if (!groupId) throw createError(400, "Group ID is required");
+
+    const group = await prisma.group.findUnique({
+      where: {
+        id: parseInt(groupId),
+      },
+      include: { members: true, events: true },
+    });
+
+    if (!group) throw createError(404, "Group not found");
+
+    res.status(200).json(group);
   } catch (error) {
     next(error);
   }
