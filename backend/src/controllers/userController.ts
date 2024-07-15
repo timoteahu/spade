@@ -18,6 +18,7 @@ export const signUp = async (
     if (!email || !username || !password)
       throw createError(400, "Email, username, and password are required");
 
+    console.log("HI");
     // Check if the user already exists
     const existingUser = await prisma.user.findUnique({
       where: {

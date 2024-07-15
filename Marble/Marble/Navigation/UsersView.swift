@@ -12,6 +12,7 @@ struct UsersView: View {
     @State private var email = ""
     @State private var username = ""
     @State private var password = ""
+    @State private var userId = ""
     @State private var showAlert = false
     @State private var alertMessage = ""
 
@@ -28,6 +29,10 @@ struct UsersView: View {
                         .padding()
                     
                     Text("\(email)")
+                        .font(.subheadline)
+                        .padding()
+                    
+                    Text("\(userId)")
                         .font(.subheadline)
                         .padding()
 
@@ -83,9 +88,11 @@ struct UsersView: View {
         .onAppear {
             // Check if user info is stored in UserDefaults
             if let storedEmail = UserDefaults.standard.string(forKey: "userEmail"),
-               let storedUsername = UserDefaults.standard.string(forKey: "userUsername") {
+               let storedUsername = UserDefaults.standard.string(forKey: "userUsername"),
+                let storedUserId = UserDefaults.standard.string(forKey: "userId") {
                 email = storedEmail
                 username = storedUsername
+                userId = storedUserId
                 isSignedIn = true
             }
         }
@@ -105,6 +112,7 @@ struct UsersView: View {
                 case .success:
                     UserDefaults.standard.set(email, forKey: "userEmail")
                     UserDefaults.standard.set(username, forKey: "userUsername")
+                    userId = UserDefaults.standard.string(forKey: "userId")!
                     isSignedIn = true
                     showAlert = false
                 case .failure(let error):
@@ -121,11 +129,13 @@ struct UsersView: View {
         email = ""
         username = ""
         password = ""
+        userId = ""
         showAlert = false
         alertMessage = ""
 
         // Remove user info from UserDefaults
         UserDefaults.standard.removeObject(forKey: "userEmail")
         UserDefaults.standard.removeObject(forKey: "userUsername")
+        UserDefaults.standard.removeObject(forKey: "userId")
     }
 }
