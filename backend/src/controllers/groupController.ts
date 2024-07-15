@@ -22,7 +22,8 @@ export const createGroup = async (
   next: NextFunction,
 ) => {
   try {
-    const { name, userId } = req.body;
+    const { name } = req.body;
+    const userId = req?.payload?.userId;
 
     if (!name || !userId)
       throw createError(400, "Required argument not provided");

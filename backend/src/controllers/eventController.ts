@@ -11,7 +11,8 @@ export const createEvent = async (
   next: NextFunction,
 ) => {
   try {
-    const { title, description, groupId } = req.body;
+    const { groupId } = req.params;
+    const { title, description } = req.body;
 
     if (!title || !description || !groupId)
       throw createError(400, "Required argument not provided");
@@ -20,7 +21,7 @@ export const createEvent = async (
       data: {
         title: title,
         description: description,
-        groupId: groupId,
+        groupId: parseInt(groupId),
       },
     });
 
