@@ -27,7 +27,7 @@ describe("Test Account Creation", () => {
       .post("/user/")
       .send(createUserBody)
       .then((response) => {
-        console.log(response);
+        console.log(response.body);
         expect(response.statusCode).toBe(201);
         done();
       });
