@@ -24,6 +24,7 @@
 		30F85B302C44D47B0036F8AC /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 30F85B2F2C44D47B0036F8AC /* JWTDecode */; };
 		30F85B322C44EDE50036F8AC /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F85B312C44EDE50036F8AC /* CreateGroupView.swift */; };
 		3B1A9B152C4500B000C130DF /* GroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B1A9B142C4500B000C130DF /* GroupDetailView.swift */; };
+		3BA318232C460859006F39BE /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA318222C460859006F39BE /* CreateEventView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		30A8A4B52C407E530079462E /* KeyChainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainHelper.swift; sourceTree = "<group>"; };
 		30F85B312C44EDE50036F8AC /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		3B1A9B142C4500B000C130DF /* GroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailView.swift; sourceTree = "<group>"; };
+		3BA318222C460859006F39BE /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEventView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				30A8A4A22C3F12DE0079462E /* EventsView.swift */,
+				3BA318222C460859006F39BE /* CreateEventView.swift */,
 			);
 			path = EventsView;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				30172ABB2C368E77000CAD04 /* MarbleApp.swift in Sources */,
 				30A8A4A12C3F12BB0079462E /* GroupsView.swift in Sources */,
 				30A8A49F2C3F129F0079462E /* UsersView.swift in Sources */,
+				3BA318232C460859006F39BE /* CreateEventView.swift in Sources */,
 				30A8A4AE2C3F2D0E0079462E /* NetworkService.swift in Sources */,
 				30A8A4B42C3FAE0E0079462E /* SplashScreenView.swift in Sources */,
 			);
