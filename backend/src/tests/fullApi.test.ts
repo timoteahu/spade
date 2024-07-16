@@ -164,7 +164,7 @@ describe("token/id-tests", () => {
     describe("test-delete", () => {
       test("deleting event", (done) => {
         request(app)
-          .delete(`/event/${inputGroupData.id}/${inputGroupData.eventId}`)
+          .delete(`/event/${inputGroupData.eventId}`)
           .send(createEventBody)
           .set(inputUserData.headers)
           .then((response) => {

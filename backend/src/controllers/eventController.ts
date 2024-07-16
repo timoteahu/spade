@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 
 import { createError } from "../middleware/handleErrors";
 import * as eventTypes from "../types/api/event/eventExpress";
@@ -34,12 +34,12 @@ export const createEvent = async (
 
 // grabs event from event Id
 export const getEvent = async (
-  req: Request,
+  req: eventTypes.getEventRequest,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const { eventId } = req.params;
+    const eventId = req.params.eventId;
 
     if (!eventId) throw createError(400, "Required argument not provided");
 
@@ -57,7 +57,7 @@ export const getEvent = async (
 
 /* ==== Update ====*/
 export const updateEvent = async (
-  req: Request,
+  req: eventTypes.updateEventRequest,
   res: Response,
   next: NextFunction,
 ) => {
@@ -85,7 +85,7 @@ export const updateEvent = async (
 
 /* ==== DELETE ====*/
 export const deleteEvent = async (
-  req: Request,
+  req: eventTypes.deleteEventRequest,
   res: Response,
   next: NextFunction,
 ) => {

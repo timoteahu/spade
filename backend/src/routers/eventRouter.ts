@@ -12,8 +12,8 @@ import { validateCreateEvent } from "../middleware/validators/eventValidator";
 const router = express.Router();
 
 router.post("/:groupId/", checkMembership, validateCreateEvent, createEvent);
-router.get("/:groupId/:eventId", checkMembership, getEvent);
-router.patch("/:groupId/:eventId", checkMembership, updateEvent);
-router.delete("/:groupId/:eventId", checkMembership, deleteEvent);
+router.get("/:eventId", checkMembership, getEvent);
+router.patch("/:eventId", checkMembership, updateEvent);
+router.delete("/:eventId", checkMembership, deleteEvent);
 
 export default router;

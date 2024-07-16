@@ -17,7 +17,7 @@ export type checkMembershipBody = {
   groupId?: number;
 };
 export type checkMembershipRequest = AuthenticatedRequest<
-  core.ParamsDictionary,
+  UnknownObject,
   UnknownObject,
   checkMembershipBody
 >;
