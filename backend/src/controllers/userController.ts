@@ -3,18 +3,22 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 import { createError } from "../middleware/handleErrors";
+import * as bodyTypes from "../types/apiBody";
 import { AuthenticatedRequest } from "../types/AuthenticationTypes";
+import * as custom from "../types/customExpress";
 import prisma from "../utils/prisma";
 
 /* ==== CREATE ====*/
 export const signUp = async (
-  req: Request,
+  req: custom.CustomRequest<unknown, unknown, bodyTypes.createUserBody>,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     // Extract email, username, and password from the request body
     const { email, username, password } = req.body;
+
+    /* validate body */
     if (!email || !username || !password)
       throw createError(400, "Email, username, and password are required");
 
@@ -111,7 +115,7 @@ export const login = async (
 
 /* ==== UPDATE ==== */
 export const joinGroup = async (
-  req: AuthenticatedRequest,
+  req: AuthenticatedRequest<unknown, unknown, bodyTypes.joinGroupBody>,
   res: Response,
   next: NextFunction,
 ) => {
@@ -142,7 +146,7 @@ export const joinGroup = async (
 };
 
 export const leaveGroup = async (
-  req: AuthenticatedRequest,
+  req: AuthenticatedRequest<unknown, unknown, bodyTypes.leaveGroupBody>,
   res: Response,
   next: NextFunction,
 ) => {

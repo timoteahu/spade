@@ -84,6 +84,7 @@ describe("token/id-tests", () => {
 
             // set id to test
             inputGroupData.id = response.body.id;
+            createEventBody.groupId = response.body.id;
             done();
           } catch (error) {
             done(error);

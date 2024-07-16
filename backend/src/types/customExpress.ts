@@ -4,11 +4,11 @@ import { JwtPayload } from "jsonwebtoken";
 
 type unknownObject = Record<string, unknown>;
 
-export type AuthenticatedRequest<
+export type CustomRequest<
   Params = core.ParamsDictionary,
   ResBody = unknownObject,
   ReqBody = unknownObject,
-  Query = unknownObject,
+  Query = unknown,
 > = Request<Params, ResBody, ReqBody, Query> & {
   payload?: JwtPayload;
 };

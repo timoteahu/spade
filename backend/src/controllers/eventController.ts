@@ -1,18 +1,25 @@
 import { NextFunction, Request, Response } from "express";
+import * as core from "express-serve-static-core";
 
 import { createError } from "../middleware/handleErrors";
+import * as bodyTypes from "../types/apiBody";
 import { AuthenticatedRequest } from "../types/AuthenticationTypes";
 import prisma from "../utils/prisma";
 
 /* ==== CREATE ====*/
 export const createEvent = async (
-  req: AuthenticatedRequest,
+  req: AuthenticatedRequest<
+    core.ParamsDictionary,
+    unknown,
+    bodyTypes.createEventBody
+  >,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const { groupId } = req.params;
-    const { title, description } = req.body;
+    const title = req.body.title;
+    const groupId = req.body.groupId;
+    const description = req.body.description;
 
     if (!title || !description || !groupId)
       throw createError(400, "Required argument not provided");
@@ -21,7 +28,7 @@ export const createEvent = async (
       data: {
         title: title,
         description: description,
-        groupId: parseInt(groupId),
+        groupId: groupId,
       },
     });
 
