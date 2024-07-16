@@ -41,8 +41,12 @@ export const checkMembership = async (
 ) => {
   try {
     /* load arguments and pass errors */
-    const { groupId } = req.body;
+    const groupIdBody = req.body.groupId;
+    const groupIdParam = req.params.groupId as string;
     const userId = req?.payload?.userId;
+
+    const groupId = groupIdBody ? groupIdBody : parseInt(groupIdParam);
+
     if (!groupId) {
       console.log(req.body);
       throw createError(401, "Parameters do not contain required values");
