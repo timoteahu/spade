@@ -2,7 +2,6 @@ import { NextFunction, Response } from "express";
 
 import { createError } from "../middleware/handleErrors";
 import * as groupTypes from "../types/api/group/groupExpress";
-import { AuthenticatedRequest } from "../types/AuthenticationTypes";
 import prisma from "../utils/prisma";
 
 function generateRandomString(): string {
@@ -47,8 +46,8 @@ export const createGroup = async (
 };
 
 //retrieves group by id
-export const getGroups = async (
-  req: AuthenticatedRequest,
+export const getUserGroups = async (
+  req: groupTypes.getUserGroupsRequest,
   res: Response,
   next: NextFunction,
 ) => {
@@ -73,7 +72,7 @@ export const getGroups = async (
 };
 
 export const getGroupById = async (
-  req: AuthenticatedRequest,
+  req: groupTypes.getGroupByIdRequest,
   res: Response,
   next: NextFunction,
 ) => {

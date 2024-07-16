@@ -8,3 +8,13 @@ export type createGroupRequest = AuthenticatedRequest<
   unknown,
   argTypes.createGroupBody
 >;
+
+export type getUserGroupsRequest = AuthenticatedRequest<
+  argTypes.getUserGroupsParams,
+  unknown
+>;
+
+export type getGroupByIdRequest = AuthenticatedRequest<
+  argTypes.getGroupByIdParams,
+  unknown
+>;
