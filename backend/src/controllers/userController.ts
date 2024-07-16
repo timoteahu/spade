@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 
 import { createError } from "../middleware/handleErrors";
@@ -59,7 +59,7 @@ export const signUp = async (
 
 /* ==== READ ==== */
 export const login = async (
-  req: Request,
+  req: userTypes.loginRequeset,
   res: Response,
   next: NextFunction,
 ) => {
@@ -144,7 +144,7 @@ export const joinGroup = async (
 };
 
 export const leaveGroup = async (
-  req: userTypes.leaveGroupBody,
+  req: userTypes.leaveGroupRequest,
   res: Response,
   next: NextFunction,
 ) => {
@@ -177,12 +177,12 @@ export const leaveGroup = async (
 
 /* ==== DELETE ====*/
 export const deleteUser = async (
-  req: Request,
+  req: userTypes.deleteUserRequest,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const { userId } = req.params;
+    const userId = req.payload?.userId;
 
     const user = await prisma.user.delete({
       where: {
