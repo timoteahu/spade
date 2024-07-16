@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 
 import { createError } from "../middleware/handleErrors";
-import * as bodyTypes from "../types/apiBody";
+import * as groupTypes from "../types/api/group/groupExpress";
 import { AuthenticatedRequest } from "../types/AuthenticationTypes";
 import prisma from "../utils/prisma";
 
@@ -18,7 +18,7 @@ function generateRandomString(): string {
 
 //Create Groups
 export const createGroup = async (
-  req: AuthenticatedRequest<unknown, unknown, bodyTypes.createGroupBody>,
+  req: groupTypes.createGroupRequest,
   res: Response,
   next: NextFunction,
 ) => {

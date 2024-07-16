@@ -3,14 +3,12 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 import { createError } from "../middleware/handleErrors";
-import * as bodyTypes from "../types/apiBody";
-import { AuthenticatedRequest } from "../types/AuthenticationTypes";
-import * as custom from "../types/customExpress";
+import * as userTypes from "../types/api/user/userExpress";
 import prisma from "../utils/prisma";
 
 /* ==== CREATE ====*/
 export const signUp = async (
-  req: custom.CustomRequest<unknown, unknown, bodyTypes.createUserBody>,
+  req: userTypes.createUserRequest,
   res: Response,
   next: NextFunction,
 ) => {
@@ -115,7 +113,7 @@ export const login = async (
 
 /* ==== UPDATE ==== */
 export const joinGroup = async (
-  req: AuthenticatedRequest<unknown, unknown, bodyTypes.joinGroupBody>,
+  req: userTypes.joinGroupRequest,
   res: Response,
   next: NextFunction,
 ) => {
@@ -146,7 +144,7 @@ export const joinGroup = async (
 };
 
 export const leaveGroup = async (
-  req: AuthenticatedRequest<unknown, unknown, bodyTypes.leaveGroupBody>,
+  req: userTypes.leaveGroupBody,
   res: Response,
   next: NextFunction,
 ) => {

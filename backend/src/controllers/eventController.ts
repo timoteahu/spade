@@ -1,18 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import * as core from "express-serve-static-core";
 
 import { createError } from "../middleware/handleErrors";
-import * as bodyTypes from "../types/apiBody";
-import { AuthenticatedRequest } from "../types/AuthenticationTypes";
+import * as eventTypes from "../types/api/event/eventExpress";
 import prisma from "../utils/prisma";
 
 /* ==== CREATE ====*/
 export const createEvent = async (
-  req: AuthenticatedRequest<
-    core.ParamsDictionary,
-    unknown,
-    bodyTypes.createEventBody
-  >,
+  req: eventTypes.createEventRequest,
   res: Response,
   next: NextFunction,
 ) => {

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-import * as bodyTypes from "../types/apiBody";
+import * as authTypes from "../types/AuthenticationTypes";
 import { AuthenticatedRequest } from "../types/AuthenticationTypes";
 import prisma from "../utils/prisma";
 import { createError } from "./handleErrors";
@@ -35,11 +35,7 @@ export const verifyToken = (
 };
 
 export const checkMembership = async (
-  req: AuthenticatedRequest<
-    Record<string, unknown>,
-    unknown,
-    bodyTypes.checkMembershipBody
-  >,
+  req: authTypes.checkMembershipRequest,
   res: Response,
   next: NextFunction,
 ) => {
