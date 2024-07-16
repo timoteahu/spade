@@ -13,6 +13,7 @@
   "author": "timoteahu <hutimk@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@faker-js/faker": "^8.4.1",
     "@jest/globals": "^29.7.0",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
