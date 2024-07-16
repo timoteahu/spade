@@ -50,6 +50,18 @@ struct GroupDetailView: View {
                 }
 
                 Spacer()
+                
+                HStack {
+                    NavigationLink(destination: CreateEventView(id: groupId)) {
+                        Text("Create an Event")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                    }
+                }
             } else if let errorMessage = errorMessage {
                 Text(errorMessage)
                     .foregroundColor(.red)

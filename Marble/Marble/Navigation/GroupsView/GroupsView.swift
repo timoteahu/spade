@@ -38,7 +38,7 @@ struct GroupsView: View {
                 if isLoading {
                     ProgressView("Loading...")
                 } else if groups.isEmpty {
-                    Text("No groups found")
+                    Text("No Groups Found")
                         .font(.largeTitle)
                         .padding(.top)
                 } else {
