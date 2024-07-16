@@ -4,6 +4,10 @@ export type createUserBody = {
   password: string;
 };
 
+export type loginBody = {
+  email: string;
+};
+
 export type joinGroupBody = {
   groupId: number;
 };

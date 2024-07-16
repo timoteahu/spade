@@ -10,14 +10,22 @@ export type createUserRequest = CustomRequest<
   argTypes.createUserBody
 >;
 
+export type loginRequeset = CustomRequest<
+  core.ParamsDictionary,
+  unknown,
+  argTypes.loginBody
+>;
+
 export type joinGroupRequest = AuthenticatedRequest<
   core.ParamsDictionary,
   unknown,
   argTypes.joinGroupBody
 >;
 
-export type leaveGroupBody = AuthenticatedRequest<
+export type leaveGroupRequest = AuthenticatedRequest<
   core.ParamsDictionary,
   unknown,
   argTypes.leaveGroupBody
 >;
+
+export type deleteUserRequest = AuthenticatedRequest;
