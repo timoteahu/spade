@@ -21,40 +21,41 @@ struct EventsView: View {
     
     var body: some View {
         NavigationView {
-            VStack{
-                if isLoading {
-                    ProgressView("Loading...")
-                } else if groups.isEmpty {
-                    Text("No groups found")
-                        .font(.largeTitle)
-                        .padding(.top)
-                } else {
-                    List(groups) { group in
-                        if let events = group.events{
-                            if !events.isEmpty{
-                        VStack(alignment: .leading) {
-                                    Text(group.name)
-                                        .font(.title2)
-                                        .padding()
-                                    VStack(alignment: .leading) {
-                                        ForEach(events) { event in
-                                            Text("\(event.title) - \(event.description)")
-                                                .padding(.bottom, 2)
+                VStack{
+                    if isLoading {
+                        ProgressView("Loading...")
+                    } else if groups.isEmpty {
+                        Text("No Events to Display")
+                            .font(.largeTitle)
+                            .padding(.top)
+                    } else {
+                        List(groups) { group in
+                            if let events = group.events{
+                                if !events.isEmpty{
+                                    ScrollView{
+                                        VStack(alignment: .leading) {
+                                            Text(group.name)
+                                                .font(.title2)
+                                                .padding()
+                                            VStack(alignment: .leading) {
+                                                ForEach(events) { event in
+                                                    Text("\(event.title) - \(event.description)")
+                                                        .padding(.bottom, 2)
+                                                }
+                                            }
                                         }
+                                        .padding(.vertical, 5)
                                     }
                                 }
-                            .padding(.vertical, 5)
                             }
                         }
                     }
                 }
-            }
-            .navigationTitle("Events")
-            .onAppear(perform: fetchGroups)
-            .alert(isPresented: $showAlert) {
-                Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-        }
-        
+                .navigationTitle("Events")
+                .onAppear(perform: fetchGroups)
+                .alert(isPresented: $showAlert) {
+                    Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                }
         }
     }
     
