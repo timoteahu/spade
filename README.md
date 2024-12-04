@@ -36,14 +36,7 @@ Before you begin, ensure you have the following:
     pip install -r requirements.txt
     ```
 
-3. Set up environment variables:
-    Create a `.env` file in the root directory with the following:
-    ```env
-    OPENAI_API_KEY=your_openai_api_key
-    DATABASE_URL=your_database_url
-    ```
-
-4. Run the application:
+3. Run the application:
     ```bash
     python main.py
     ```
